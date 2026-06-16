@@ -54,7 +54,17 @@ export default function ProductShowcase({ products = [] }: { products?: any[] })
               ref={(el) => {
                 cardsRef.current[index] = el;
               }}
-              className="group flex flex-col"
+              className="group flex flex-col cursor-pointer"
+              onClick={() => setSelectedProduct({
+                id: product.id,
+                name: product.name,
+                category: product.category?.name || "Uncategorized",
+                price: `Rp ${product.price.toLocaleString('id-ID')}`,
+                rating: product.rating || 5.0,
+                image: product.image,
+                variants: product.variants,
+                description: product.description
+              })}
             >
               <div className="relative w-full aspect-square bg-[#111] overflow-hidden mb-6 border border-white/5 group-hover:border-white/20 transition-colors duration-500">
                 <Image
@@ -68,30 +78,36 @@ export default function ProductShowcase({ products = [] }: { products?: any[] })
                 {/* Hover Actions */}
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 gap-2">
                   <button 
-                    onClick={() => addItem({ 
-                      productId: product.id,
-                      name: product.name, 
-                      price: product.price?.toString() || "0", 
-                      image: product.image, 
-                      quantity: 1, 
-                      size: "L", 
-                      color: product.variants?.[0]?.colorName || "Hitam" 
-                    })}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      addItem({ 
+                        productId: product.id,
+                        name: product.name, 
+                        price: product.price?.toString() || "0", 
+                        image: product.image, 
+                        quantity: 1, 
+                        size: "L", 
+                        color: product.variants?.[0]?.colorName || "Hitam" 
+                      });
+                    }}
                     className="w-full bg-white text-black py-3 font-sans uppercase tracking-widest text-xs hover:bg-primary transition-colors flex items-center justify-center gap-2 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 duration-300"
                   >
                     <ShoppingCart size={16} /> Add to Cart
                   </button>
                   <button 
-                    onClick={() => setSelectedProduct({
-                      id: product.id,
-                      name: product.name,
-                      category: product.category?.name || "Uncategorized",
-                      price: `Rp ${product.price.toLocaleString('id-ID')}`,
-                      rating: product.rating || 5.0,
-                      image: product.image,
-                      variants: product.variants,
-                      description: product.description
-                    })}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedProduct({
+                        id: product.id,
+                        name: product.name,
+                        category: product.category?.name || "Uncategorized",
+                        price: `Rp ${product.price.toLocaleString('id-ID')}`,
+                        rating: product.rating || 5.0,
+                        image: product.image,
+                        variants: product.variants,
+                        description: product.description
+                      });
+                    }}
                     className="w-full bg-black/80 text-white py-3 border border-white/20 font-sans uppercase tracking-widest text-xs hover:bg-white/10 transition-colors flex items-center justify-center gap-2 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 duration-500 delay-75"
                   >
                     <Eye size={16} /> Quick View

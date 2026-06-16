@@ -40,7 +40,11 @@ export default function CollectionGrid({ products, title }: CollectionGridProps)
           };
 
           return (
-            <div key={index} className="group flex flex-col cursor-pointer">
+            <div 
+              key={index} 
+              className="group flex flex-col cursor-pointer"
+              onClick={() => setSelectedProduct(product)}
+            >
               <div className="relative w-full aspect-square bg-[#111] overflow-hidden mb-6 border border-white/5 group-hover:border-primary/30 transition-colors duration-500 rounded-lg">
                 {productData.badge && (
                   <div className={`absolute top-4 left-4 z-10 text-[10px] font-bold px-3 py-1 uppercase tracking-widest rounded-sm ${getBadgeColor(productData.badge)}`}>

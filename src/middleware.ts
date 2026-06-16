@@ -8,8 +8,9 @@ export async function proxy(request: NextRequest) {
   if (pathname.startsWith("/admin") && !pathname.startsWith("/admin/login")) {
     // Di Edge runtime, kita cek cookie secara manual untuk performa
     const sessionToken = request.cookies.get("better-auth.session_token")?.value;
+    const secureSessionToken = request.cookies.get("__Secure-better-auth.session_token")?.value;
     
-    if (!sessionToken) {
+    if (!sessionToken && !secureSessionToken) {
       // Redirect ke login jika tidak ada token
       const loginUrl = new URL("/admin/login", request.url);
       return NextResponse.redirect(loginUrl);

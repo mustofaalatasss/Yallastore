@@ -26,14 +26,14 @@ export default function AdminLoginPage() {
 
       if (error) {
         setError(error.message || "Email atau password salah.");
+        setIsLoading(false);
         return;
       }
 
-      router.push("/admin");
-      router.refresh();
+      // Gunakan hard redirect agar session terbaca sempurna & tidak nyangkut di client router
+      window.location.href = "/admin";
     } catch (err) {
       setError("Terjadi kesalahan. Silakan coba lagi.");
-    } finally {
       setIsLoading(false);
     }
   };

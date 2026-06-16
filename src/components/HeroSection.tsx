@@ -134,7 +134,7 @@ export default function HeroSection() {
         onTimeUpdate={handleTimeUpdate}
         className="absolute inset-0 w-full h-full object-cover z-0"
       >
-        <source src="/assets/Opening.mp4" type="video/mp4" />
+        <source src="/assets/opening.mp4" type="video/mp4" />
       </video>
 
       {/* Overlay: Changed from bg-black/60 to bg-black/30 to make it brighter */}

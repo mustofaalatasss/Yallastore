@@ -1,26 +1,90 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #050505;
+  --foreground: #f8f8f8;
+  --color-primary: #E60000;
+  --color-gold: #D4AF37;
+  --color-silver: #C0C0C0;
+  --color-dark-gray: #1a1a1a;
+  
+  /* Anime Accents */
+  --color-naruto: #ff7b00;
+  --color-onepiece: #00a8ff;
+  --color-jujutsu: #8a2be2;
+  --color-demonslayer: #ff3838;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  
+  --color-primary: var(--color-primary);
+  --color-gold: var(--color-gold);
+  --color-silver: var(--color-silver);
+  --color-dark-gray: var(--color-dark-gray);
+  
+  --color-naruto: var(--color-naruto);
+  --color-onepiece: var(--color-onepiece);
+  --color-jujutsu: var(--color-jujutsu);
+  --color-demonslayer: var(--color-demonslayer);
+  
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold);
+}
+
+/* Utilities for GSAP / Layout */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.glass-nav {
+  @apply bg-black/60 backdrop-blur-md border-b border-white/10;
+}
+
+/* Premium Animations */
+.animate-sweep {
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: sweep 4s linear infinite;
+}
+
+@keyframes sweep {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
 }

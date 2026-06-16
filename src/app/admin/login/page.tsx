@@ -30,8 +30,8 @@ export default function AdminLoginPage() {
         return;
       }
 
-      // Gunakan hard redirect agar session terbaca sempurna & tidak nyangkut di client router
-      window.location.href = "/admin";
+      // Gunakan hard redirect dengan cache-buster agar tidak terkena cache Vercel Edge
+      window.location.href = `/admin?t=${Date.now()}`;
     } catch (err) {
       setError("Terjadi kesalahan. Silakan coba lagi.");
       setIsLoading(false);

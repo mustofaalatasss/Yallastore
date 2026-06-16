@@ -58,7 +58,13 @@ export default function AdminSidebar() {
 
       {/* Footer */}
       <div className="p-4 border-t border-white/5 bg-gradient-to-t from-black/50 to-transparent">
-        <button className="flex items-center gap-3 px-4 py-3 w-full text-left rounded-xl text-xs font-sans uppercase tracking-[0.2em] text-red-500/80 hover:bg-red-500/10 hover:text-red-500 transition-all duration-300 group">
+        <button 
+          onClick={async () => {
+            await import("@/lib/auth-client").then(m => m.signOut());
+            window.location.href = "/admin/login";
+          }}
+          className="flex items-center gap-3 px-4 py-3 w-full text-left rounded-xl text-xs font-sans uppercase tracking-[0.2em] text-red-500/80 hover:bg-red-500/10 hover:text-red-500 transition-all duration-300 group"
+        >
           <LogOut size={18} className="group-hover:-translate-x-1 transition-transform duration-300" />
           <span className="mt-0.5">Logout</span>
         </button>

@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Content-Security-Policy",
-            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data: https://res.cloudinary.com; font-src 'self'; connect-src 'self' https://yallastore.vercel.app https://vercel.live wss://vercel.live wss://*.pusher.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'self' https://vercel.live; frame-ancestors 'none'; upgrade-insecure-requests;",
+            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data: https://res.cloudinary.com; font-src 'self' https://vercel.live; connect-src 'self' https://yallastore.vercel.app https://vercel.live wss://vercel.live wss://*.pusher.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'self' https://vercel.live; frame-ancestors 'none'; upgrade-insecure-requests;",
           },
           {
             key: "Strict-Transport-Security",

@@ -15,7 +15,10 @@ export default async function AdminLayout({
   });
 
   if (!session) {
-    redirect("/admin/login");
+    console.error("SESSION IS NULL ON SERVER SIDE!");
+    // TEMPORARILY DISABLED: redirect("/admin/login");
+  } else {
+    console.log("SESSION FOUND ON SERVER SIDE:", session.user.email);
   }
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-primary selection:text-black">

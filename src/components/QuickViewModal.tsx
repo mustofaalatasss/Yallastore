@@ -102,7 +102,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
       {/* Modal Content */}
       <div 
         className={cn(
-          "relative w-[95vw] md:w-[90vw] max-w-7xl min-h-[85vh] md:h-[85vh] bg-[#111] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col md:flex-row transition-all duration-300 transform rounded-xl",
+          "relative w-[95vw] md:w-[90vw] max-w-7xl h-[90vh] md:h-[85vh] bg-[#111] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col md:flex-row transition-all duration-300 transform rounded-xl",
           isClosing ? "opacity-0 scale-95" : "opacity-100 scale-100"
         )}
       >
@@ -117,7 +117,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
         {localProduct && (
           <>
             {/* Image Section */}
-            <div className="w-full md:w-3/5 relative min-h-[50vh] md:min-h-full bg-[#0a0a0a] group overflow-hidden cursor-zoom-in">
+            <div className="w-full md:w-3/5 relative h-[40vh] md:h-full flex-shrink-0 bg-[#0a0a0a] group overflow-hidden cursor-zoom-in">
               {showSizeGuide ? (
                 <div className="absolute inset-0 z-20 bg-black/90 flex flex-col items-center justify-center p-6 animate-in fade-in duration-300">
                   <button 
@@ -153,7 +153,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
             </div>
 
             {/* Details Section */}
-            <div className="w-full md:w-2/5 p-8 md:p-12 flex flex-col bg-gradient-to-br from-[#111] to-black overflow-y-auto">
+            <div className="w-full md:w-2/5 p-6 md:p-12 flex flex-col bg-gradient-to-br from-[#111] to-black overflow-y-auto flex-1">
               <span className="text-xs uppercase tracking-[0.2em] text-silver mb-3 block">
                 {localProduct.category}
               </span>

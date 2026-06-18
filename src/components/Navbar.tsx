@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import Link from "next/link";
 import Image from "next/image";
-import { Search, ShoppingCart, Package } from "lucide-react";
+import { Search, ShoppingCart, Package, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/store/useCartStore";
 import { useUIStore } from "@/store/useUIStore";
@@ -24,6 +24,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { items, openSidebar } = useCartStore();
   const cartItemCount = items.reduce((total, item) => total + item.quantity, 0);
   const logoAppeared = useUIStore((state) => state.logoAppeared);
@@ -105,8 +106,45 @@ export default function Navbar() {
           <button className="hidden md:block px-6 py-2 border border-primary text-primary hover:bg-primary hover:text-black transition-all duration-300 font-sans tracking-widest uppercase text-xs">
             Shop Now
           </button>
+
+          {/* Mobile Menu Toggle */}
+          <button 
+            className="lg:hidden text-silver hover:text-primary transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile Menu Dropdown */}
+      <div 
+        className={cn(
+          "lg:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-xl border-t border-primary/20 transition-all duration-300 ease-in-out overflow-hidden shadow-2xl shadow-black",
+          isMobileMenuOpen ? "max-h-[500px] py-8 opacity-100" : "max-h-0 py-0 opacity-0 pointer-events-none"
+        )}
+      >
+        <ul className="flex flex-col items-center space-y-6">
+          {navLinks.map((link) => (
+            <li key={link.name}>
+              <Link 
+                href={link.href} 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-sm font-sans uppercase tracking-widest text-silver hover:text-primary transition-colors"
+              >
+                {link.name}
+              </Link>
+            </li>
+          ))}
+          <li className="pt-4 md:hidden">
+            <button className="px-6 py-2 border border-primary text-primary hover:bg-primary hover:text-black transition-all duration-300 font-sans tracking-widest uppercase text-xs">
+              Shop Now
+            </button>
+          </li>
+        </ul>
+      </div>
+
       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </nav>
   );

@@ -96,49 +96,10 @@ export async function POST(req: Request) {
       });
     }
 
-    // 6. Get Midtrans Snap Token
-    const serverKey = process.env.MIDTRANS_SERVER_KEY || "SB-Mid-server-DUMMY";
-    const authString = Buffer.from(serverKey + ":").toString('base64');
-    
-    if (serverKey.includes("DUMMY")) {
-      return NextResponse.json({ 
-        orderId: newOrder.id,
-        orderNumber: newOrder.orderNumber,
-        snapToken: null
-      });
-    }
-
-    const midtransRes = await fetch("https://app.sandbox.midtrans.com/snap/v1/transactions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Basic ${authString}`,
-      },
-      body: JSON.stringify({
-        transaction_details: {
-          order_id: newOrder.orderNumber,
-          gross_amount: totalAmount,
-        },
-        customer_details: {
-          first_name: customerName,
-          email: customerEmail || "noemail@example.com",
-          phone: customerPhone,
-        },
-      }),
-    });
-
-    if (!midtransRes.ok) {
-      console.error("Midtrans API Error:", await midtransRes.text());
-      return NextResponse.json({ error: "Failed to get payment token" }, { status: 500 });
-    }
-
-    const midtransData = await midtransRes.json();
-    await db.update(orders).set({ snapToken: midtransData.token }).where(eq(orders.id, newOrder.id));
-
+    // 6. Return response immediately for manual transfer
     return NextResponse.json({
       orderId: newOrder.id,
-      orderNumber: newOrder.orderNumber,
-      snapToken: midtransData.token
+      orderNumber: newOrder.orderNumber
     });
 
   } catch (error) {

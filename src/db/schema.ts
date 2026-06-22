@@ -115,6 +115,8 @@ export const orders = pgTable("orders", {
   status: text("status").notNull().default("Pending"), // Pending, Processing, Completed, Cancelled
   notes: text("notes"),
   snapToken: text("snap_token"),
+  paymentMethod: text("payment_method").notNull().default("Manual Transfer"),
+  paymentProof: text("payment_proof"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });

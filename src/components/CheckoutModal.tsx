@@ -2,7 +2,7 @@
 
 import { useCartStore } from "@/store/useCartStore";
 import { cn } from "@/lib/utils";
-import { X, CheckCircle, Clock, Loader2, MessageCircle } from "lucide-react";
+import { X, CheckCircle, Clock, Loader2, MessageCircle, Upload } from "lucide-react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
@@ -25,29 +25,17 @@ export default function CheckoutModal() {
     address: ""
   });
 
-  const [dummyQRIS, setDummyQRIS] = useState(false);
+  const [proofFile, setProofFile] = useState<File | null>(null);
+  const [isUploadingProof, setIsUploadingProof] = useState(false);
   const [simulateOrderId, setSimulateOrderId] = useState<number | null>(null);
   const [completedOrderNumber, setCompletedOrderNumber] = useState<string | null>(null);
 
   useEffect(() => {
     if (isCheckoutOpen) {
       setIsSuccess(false);
-      setDummyQRIS(false);
       setSimulateOrderId(null);
+      setProofFile(null);
       document.body.style.overflow = "hidden";
-      
-      // Load Midtrans Snap Script
-      const scriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
-      const clientKey = process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY || "SB-Mid-client-DUMMY";
-      
-      let script = document.querySelector(`script[src="${scriptUrl}"]`) as HTMLScriptElement;
-      if (!script) {
-        script = document.createElement("script");
-        script.src = scriptUrl;
-        script.setAttribute("data-client-key", clientKey);
-        script.async = true;
-        document.body.appendChild(script);
-      }
     } else {
       document.body.style.overflow = "unset";
     }
@@ -93,34 +81,11 @@ export default function CheckoutModal() {
         const data = await res.json();
         setCompletedOrderNumber(data.orderNumber || `ORD-${data.orderId}`);
         
-        if (data.snapToken && window.snap) {
-          window.snap.pay(data.snapToken, {
-            onSuccess: function (result: any) {
-              handleSimulatePayment(data.orderId);
-            },
-            onPending: function (result: any) {
-              alert("Payment pending. Please complete your payment.");
-              closeCheckout();
-              setIsLoading(false);
-            },
-            onError: function (result: any) {
-              alert("Payment failed!");
-              setIsLoading(false);
-            },
-            onClose: function () {
-              // Customer closed the popup without finishing the payment
-              setIsLoading(false);
-            }
-          });
-        } else {
-          // Fallback to dummy QRIS mode
-          setSimulateOrderId(data.orderId);
-          setDummyQRIS(true);
-        }
+        setSimulateOrderId(data.orderId);
       } else {
         alert("Failed to create order");
-        setIsLoading(false);
       }
+      setIsLoading(false);
     } catch (error) {
       console.error("Error creating order:", error);
       alert("An error occurred during checkout");
@@ -128,21 +93,36 @@ export default function CheckoutModal() {
     }
   };
 
-  const handleSimulatePayment = async (orderId: number) => {
-    setIsLoading(true);
+  const handleUploadProof = async () => {
+    if (!proofFile || !simulateOrderId) return;
+    setIsUploadingProof(true);
+    
     try {
-      await fetch(`/api/orders/${orderId}`, {
+      const uploadFormData = new FormData();
+      uploadFormData.append("file", proofFile);
+      
+      const uploadRes = await fetch("/api/upload/payment", {
+        method: "POST",
+        body: uploadFormData,
+      });
+      
+      if (!uploadRes.ok) throw new Error("Upload failed");
+      const { url } = await uploadRes.json();
+      
+      await fetch(`/api/orders/${simulateOrderId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: "Processing" }) // Wait, in the backend we need to allow "Processing" or use "Completed" bypass
+        body: JSON.stringify({ paymentProof: url, status: "Processing" }) 
       });
+      
+      setIsSuccess(true);
+      clearCart();
     } catch (error) {
-      console.error("Error updating order:", error);
+      console.error("Error uploading proof:", error);
+      alert("Gagal mengunggah bukti pembayaran.");
+    } finally {
+      setIsUploadingProof(false);
     }
-    setDummyQRIS(false);
-    setIsSuccess(true);
-    setIsLoading(false);
-    clearCart();
   };
 
   const parsePrice = (priceStr: string) => {
@@ -233,30 +213,42 @@ export default function CheckoutModal() {
               <h2 className="text-xl font-serif text-white uppercase tracking-widest mb-6">Shipping Details</h2>
               
               <form onSubmit={handleCheckout} className="space-y-4">
-                {dummyQRIS ? (
+                {simulateOrderId ? (
                   <div className="flex flex-col items-center justify-center py-8 text-center animate-in fade-in zoom-in duration-300">
-                    <h3 className="text-xl font-serif text-white mb-2">Simulate Payment (QRIS)</h3>
-                    <p className="text-silver text-sm mb-6">Since you are using a DUMMY key, please simulate the payment here.</p>
+                    <h3 className="text-xl font-serif text-white mb-2">Transfer Pembayaran</h3>
+                    <p className="text-silver text-sm mb-6">Silakan transfer sesuai total tagihan ke rekening berikut:</p>
                     
-                    <div className="bg-white p-4 rounded-xl mb-6 relative">
-                      {/* Fake QR Barcode using simple CSS patterns */}
-                      <div className="w-48 h-48 bg-white flex flex-col gap-1 p-2 border-4 border-black">
-                        <div className="flex justify-between w-full h-12">
-                          <div className="w-12 h-12 border-4 border-black bg-black/20" />
-                          <div className="w-12 h-12 border-4 border-black bg-black/20" />
+                    <div className="bg-[#111] border border-white/10 p-6 rounded-xl mb-6 w-full max-w-sm">
+                      <p className="text-xs uppercase tracking-widest text-silver mb-1">Bank BCA</p>
+                      <p className="text-2xl font-bold text-white mb-1">7600262275</p>
+                      <p className="text-sm text-gold">a.n. Mustofa</p>
+                    </div>
+
+                    <div className="w-full max-w-sm text-left mb-6">
+                      <label className="text-xs uppercase tracking-widest text-silver block mb-2">Unggah Bukti Transfer</label>
+                      <div className="relative">
+                        <input 
+                          type="file" 
+                          accept="image/*"
+                          onChange={(e) => setProofFile(e.target.files?.[0] || null)}
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                        />
+                        <div className="flex items-center justify-center w-full px-4 py-3 bg-[#111] border border-white/10 rounded border-dashed hover:border-primary/50 transition-colors">
+                          <Upload size={16} className="text-silver mr-2" />
+                          <span className="text-sm text-silver truncate">
+                            {proofFile ? proofFile.name : "Pilih gambar bukti transfer..."}
+                          </span>
                         </div>
-                        <div className="w-full flex-1 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSIyIiBoZWlnaHQ9IjIiIGZpbGw9IiMwMDAiLz48L3N2Zz4=')] bg-repeat opacity-80" />
-                        <div className="w-12 h-12 border-4 border-black bg-black/20" />
                       </div>
                     </div>
                     
                     <button 
                       type="button"
-                      onClick={() => handleSimulatePayment(simulateOrderId!)}
-                      disabled={isLoading}
-                      className="bg-primary text-black px-8 py-3 font-sans uppercase tracking-widest text-sm hover:bg-white transition-colors font-bold rounded"
+                      onClick={handleUploadProof}
+                      disabled={isUploadingProof || !proofFile}
+                      className="bg-primary text-black w-full max-w-sm py-4 font-sans uppercase tracking-widest text-sm hover:bg-white transition-colors font-bold rounded flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      {isLoading ? "Processing..." : "Mark as Paid"}
+                      {isUploadingProof ? <Loader2 className="animate-spin" /> : "Konfirmasi Pembayaran"}
                     </button>
                   </div>
                 ) : (

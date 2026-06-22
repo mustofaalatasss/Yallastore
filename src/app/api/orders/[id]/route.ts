@@ -10,20 +10,21 @@ const updateOrderSchema = z.object({
     .enum(["Pending", "Processing", "Completed", "Cancelled"])
     .optional(),
   notes: z.string().max(1000).nullable().optional(),
+  paymentProof: z.string().url().optional(),
 });
 
-// PATCH /api/orders/[id] - Update order status (ADMIN ONLY)
+// PATCH /api/orders/[id] - Update order status (ADMIN ONLY) or Upload Payment Proof (GUEST)
 export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    // Auth check (allow bypass for simulated payment completion)
+    // Auth check (allow bypass for payment proof upload or simulated payment completion)
     const session = await getAuthSession();
     const bodyText = await request.text();
     const body = bodyText ? JSON.parse(bodyText) : {};
     
-    if (!session && body.status !== "Completed" && body.status !== "Processing") {
+    if (!session && body.status !== "Completed" && body.status !== "Processing" && !body.paymentProof) {
       return unauthorizedResponse();
     }
 
@@ -42,11 +43,12 @@ export async function PATCH(
       );
     }
 
-    const { status, notes } = parsed.data;
+    const { status, notes, paymentProof } = parsed.data;
 
     const updateData: Record<string, any> = { updatedAt: new Date() };
     if (status !== undefined) updateData.status = status;
     if (notes !== undefined) updateData.notes = notes;
+    if (paymentProof !== undefined) updateData.paymentProof = paymentProof;
 
     const [updated] = await db
       .update(orders)

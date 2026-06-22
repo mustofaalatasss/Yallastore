@@ -82,7 +82,7 @@ export default function TrackOrderClient() {
       case "processing": return <Package className="text-blue-500" size={24} />;
       case "shipped": return <Truck className="text-purple-500" size={24} />;
       case "completed": return <CheckCircle className="text-green-500" size={24} />;
-      default: return <Clock className="text-silver" size={24} />;
+      default: return <Clock className="dark:text-silver text-gray-600" size={24} />;
     }
   };
 
@@ -94,7 +94,7 @@ export default function TrackOrderClient() {
           value={orderId}
           onChange={(e) => setOrderId(e.target.value)}
           placeholder="Order ID (e.g. YALLA-12345)"
-          className="flex-1 bg-[#111] border border-white/10 rounded px-6 py-4 text-white focus:outline-none focus:border-primary transition-colors"
+          className="flex-1 dark:bg-[#111] bg-gray-100 border dark:border-white/10 border-black/10 rounded px-6 py-4 dark:text-white text-gray-900 focus:outline-none focus:border-primary transition-colors"
           required
         />
         <input 
@@ -102,7 +102,7 @@ export default function TrackOrderClient() {
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           placeholder="WhatsApp Number"
-          className="flex-1 bg-[#111] border border-white/10 rounded px-6 py-4 text-white focus:outline-none focus:border-primary transition-colors"
+          className="flex-1 dark:bg-[#111] bg-gray-100 border dark:border-white/10 border-black/10 rounded px-6 py-4 dark:text-white text-gray-900 focus:outline-none focus:border-primary transition-colors"
           required
         />
         <button 
@@ -121,15 +121,15 @@ export default function TrackOrderClient() {
       )}
 
       {orderData && (
-        <div className="bg-[#111] border border-white/10 rounded-xl p-8">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-white/10 pb-6 mb-6 gap-4">
+        <div className="dark:bg-[#111] bg-gray-100 border dark:border-white/10 border-black/10 rounded-xl p-8">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b dark:border-white/10 border-black/10 pb-6 mb-6 gap-4">
             <div>
-              <h2 className="text-2xl font-serif text-white mb-1">Order {orderData.orderNumber}</h2>
-              <p className="text-silver text-sm">Placed on {new Date(orderData.createdAt).toLocaleDateString()}</p>
+              <h2 className="text-2xl font-serif dark:text-white text-gray-900 mb-1">Order {orderData.orderNumber}</h2>
+              <p className="dark:text-silver text-gray-600 text-sm">Placed on {new Date(orderData.createdAt).toLocaleDateString()}</p>
             </div>
-            <div className="flex items-center gap-3 bg-[#0a0a0a] border border-white/5 px-6 py-3 rounded-full">
+            <div className="flex items-center gap-3 dark:bg-[#0a0a0a] bg-gray-50 border dark:border-white/5 border-black/5 px-6 py-3 rounded-full">
               {getStatusIcon(orderData.status)}
-              <span className="text-white font-sans uppercase tracking-widest text-sm font-bold">
+              <span className="dark:text-white text-gray-900 font-sans uppercase tracking-widest text-sm font-bold">
                 {orderData.status}
               </span>
             </div>
@@ -137,19 +137,19 @@ export default function TrackOrderClient() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-              <h3 className="text-lg font-serif text-white uppercase tracking-widest mb-4">Items</h3>
+              <h3 className="text-lg font-serif dark:text-white text-gray-900 uppercase tracking-widest mb-4">Items</h3>
               <div className="space-y-4">
                 {orderData.items.map((item: any) => (
-                  <div key={item.id} className="flex flex-col gap-4 bg-[#0a0a0a] p-4 rounded border border-white/5">
+                  <div key={item.id} className="flex flex-col gap-4 dark:bg-[#0a0a0a] bg-gray-50 p-4 rounded border dark:border-white/5 border-black/5">
                     <div className="flex gap-4">
                       {item.product?.image && (
-                        <div className="w-16 h-16 bg-[#111] rounded relative flex-shrink-0 border border-white/5">
+                        <div className="w-16 h-16 dark:bg-[#111] bg-gray-100 rounded relative flex-shrink-0 border dark:border-white/5 border-black/5">
                           <Image src={item.product.image} alt={item.productName} fill className="object-contain p-1" unoptimized />
                         </div>
                       )}
                       <div className="flex-1">
-                        <h4 className="text-sm text-white line-clamp-1">{item.productName}</h4>
-                        <p className="text-[10px] uppercase tracking-widest text-silver mt-1">
+                        <h4 className="text-sm dark:text-white text-gray-900 line-clamp-1">{item.productName}</h4>
+                        <p className="text-[10px] uppercase tracking-widest dark:text-silver text-gray-600 mt-1">
                           {item.size && `${item.size}`} {item.color && `/ ${item.color}`} x{item.quantity}
                         </p>
                         <p className="text-xs text-gold mt-1">Rp {item.price.toLocaleString("id-ID")}</p>
@@ -159,7 +159,7 @@ export default function TrackOrderClient() {
                         <div className="flex items-center">
                           <button 
                             onClick={() => setReviewingProductId(reviewingProductId === item.productId ? null : item.productId)}
-                            className="text-xs border border-white/20 hover:border-white px-3 py-1 rounded text-silver hover:text-white transition-colors uppercase tracking-widest"
+                            className="text-xs border dark:border-white/20 border-black/20 hover:border-white px-3 py-1 rounded dark:text-silver text-gray-600 hover:dark:text-white text-gray-900 transition-colors uppercase tracking-widest"
                           >
                             Review
                           </button>
@@ -169,35 +169,35 @@ export default function TrackOrderClient() {
                     
                     {/* Review Form Inline */}
                     {reviewingProductId === item.productId && (
-                      <div className="mt-2 pt-4 border-t border-white/10 animate-in fade-in duration-300">
-                        <h4 className="text-xs text-white uppercase tracking-widest font-sans mb-3">Review this item</h4>
+                      <div className="mt-2 pt-4 border-t dark:border-white/10 border-black/10 animate-in fade-in duration-300">
+                        <h4 className="text-xs dark:text-white text-gray-900 uppercase tracking-widest font-sans mb-3">Review this item</h4>
                         <div className="space-y-3">
                           <div>
-                            <label className="block text-[10px] text-silver mb-1 uppercase tracking-widest">Rating</label>
+                            <label className="block text-[10px] dark:text-silver text-gray-600 mb-1 uppercase tracking-widest">Rating</label>
                             <div className="flex gap-1 cursor-pointer">
                               {[1, 2, 3, 4, 5].map((star) => (
                                 <Star 
                                   key={star} 
                                   size={16} 
                                   onClick={() => setRating(star)}
-                                  className={star <= rating ? "fill-gold text-gold" : "text-silver/30"} 
+                                  className={star <= rating ? "fill-gold text-gold" : "dark:text-silver text-gray-600/30"} 
                                 />
                               ))}
                             </div>
                           </div>
                           <div>
-                            <label className="block text-[10px] text-silver mb-1 uppercase tracking-widest">Comment</label>
+                            <label className="block text-[10px] dark:text-silver text-gray-600 mb-1 uppercase tracking-widest">Comment</label>
                             <textarea 
                               value={comment}
                               onChange={(e) => setComment(e.target.value)}
-                              className="w-full bg-[#111] border border-white/10 rounded px-3 py-2 text-white text-xs h-16 resize-none focus:outline-none focus:border-primary"
+                              className="w-full dark:bg-[#111] bg-gray-100 border dark:border-white/10 border-black/10 rounded px-3 py-2 dark:text-white text-gray-900 text-xs h-16 resize-none focus:outline-none focus:border-primary"
                               placeholder="What do you think about this product?"
                             />
                           </div>
                           <div className="flex justify-end gap-2">
                             <button 
                               onClick={() => setReviewingProductId(null)}
-                              className="px-3 py-1.5 text-xs text-silver hover:text-white transition-colors"
+                              className="px-3 py-1.5 text-xs dark:text-silver text-gray-600 hover:dark:text-white text-gray-900 transition-colors"
                             >
                               Cancel
                             </button>
@@ -220,26 +220,26 @@ export default function TrackOrderClient() {
 
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-serif text-white uppercase tracking-widest mb-4">Shipping Details</h3>
-                <div className="bg-[#0a0a0a] border border-white/5 p-4 rounded text-sm text-silver font-sans space-y-1">
-                  <p className="text-white">{orderData.customerName}</p>
+                <h3 className="text-lg font-serif dark:text-white text-gray-900 uppercase tracking-widest mb-4">Shipping Details</h3>
+                <div className="dark:bg-[#0a0a0a] bg-gray-50 border dark:border-white/5 border-black/5 p-4 rounded text-sm dark:text-silver text-gray-600 font-sans space-y-1">
+                  <p className="dark:text-white text-gray-900">{orderData.customerName}</p>
                   <p>{orderData.customerPhone}</p>
                   <p>{orderData.shippingAddress || "No address provided"}</p>
                 </div>
               </div>
               
               <div>
-                <h3 className="text-lg font-serif text-white uppercase tracking-widest mb-4">Summary</h3>
-                <div className="bg-[#0a0a0a] border border-white/5 p-4 rounded space-y-2">
-                  <div className="flex justify-between text-silver text-sm">
+                <h3 className="text-lg font-serif dark:text-white text-gray-900 uppercase tracking-widest mb-4">Summary</h3>
+                <div className="dark:bg-[#0a0a0a] bg-gray-50 border dark:border-white/5 border-black/5 p-4 rounded space-y-2">
+                  <div className="flex justify-between dark:text-silver text-gray-600 text-sm">
                     <span>Subtotal</span>
                     <span>Rp {orderData.totalAmount.toLocaleString("id-ID")}</span>
                   </div>
-                  <div className="flex justify-between text-silver text-sm">
+                  <div className="flex justify-between dark:text-silver text-gray-600 text-sm">
                     <span>Shipping</span>
-                    <span className="text-white">Free</span>
+                    <span className="dark:text-white text-gray-900">Free</span>
                   </div>
-                  <div className="flex justify-between font-bold text-lg pt-2 border-t border-white/10 text-gold">
+                  <div className="flex justify-between font-bold text-lg pt-2 border-t dark:border-white/10 border-black/10 text-gold">
                     <span>Total</span>
                     <span>Rp {orderData.totalAmount.toLocaleString("id-ID")}</span>
                   </div>

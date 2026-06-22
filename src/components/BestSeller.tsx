@@ -40,9 +40,9 @@ export default function BestSeller({ products = [] }: { products?: any[] }) {
     <section id="best-seller" className="py-24 bg-black overflow-hidden" ref={sectionRef}>
       <div className="container mx-auto px-6 md:px-12">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-serif text-white mb-4">Best Sellers</h2>
+          <h2 className="text-3xl md:text-5xl font-serif dark:text-white text-gray-900 mb-4">Best Sellers</h2>
           <div className="w-16 h-1 bg-primary mx-auto"></div>
-          <p className="text-silver mt-6 font-sans tracking-wide">Our most coveted pieces. Highly demanded by the community.</p>
+          <p className="dark:text-silver text-gray-600 mt-6 font-sans tracking-wide">Our most coveted pieces. Highly demanded by the community.</p>
         </div>
 
         <Swiper
@@ -60,7 +60,7 @@ export default function BestSeller({ products = [] }: { products?: any[] }) {
         >
           {products.map((product) => (
             <SwiperSlide key={product.id}>
-              <div className="group relative bg-[#0a0a0a] border border-white/5 rounded-xl overflow-hidden hover:border-primary/30 transition-all duration-500">
+              <div className="group relative dark:bg-[#0a0a0a] bg-gray-50 border dark:border-white/5 border-black/5 rounded-xl overflow-hidden hover:border-primary/30 transition-all duration-500">
                 {/* Sale Badge */}
                 {product.badge && (
                   <div className={`absolute top-4 left-4 z-10 text-xs font-bold px-3 py-1 uppercase tracking-widest rounded-sm ${getBadgeColor(product.badge)}`}>
@@ -69,7 +69,7 @@ export default function BestSeller({ products = [] }: { products?: any[] }) {
                 )}
 
                 {/* Image Container */}
-                <div className="relative w-full aspect-[4/5] bg-[#111] overflow-hidden">
+                <div className="relative w-full aspect-[4/5] dark:bg-[#111] bg-gray-100 overflow-hidden">
                   <Image
                     src={product.image}
                     alt={product.name}
@@ -103,14 +103,14 @@ export default function BestSeller({ products = [] }: { products?: any[] }) {
                 {/* Product Info */}
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-2">
-                    <span className="text-[10px] uppercase tracking-widest text-silver">{product.category?.name || "Uncategorized"}</span>
+                    <span className="text-[10px] uppercase tracking-widest dark:text-silver text-gray-600">{product.category?.name || "Uncategorized"}</span>
                     <div className="flex items-center gap-1 text-gold">
                       <Star size={10} className="fill-gold" />
                       <span className="text-[10px] font-sans">{product.rating || 5.0}</span>
                     </div>
                   </div>
-                  <h3 className="text-lg font-serif text-white mb-2 leading-tight group-hover:text-primary transition-colors">{product.name}</h3>
-                  <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/10">
+                  <h3 className="text-lg font-serif dark:text-white text-gray-900 mb-2 leading-tight group-hover:text-primary transition-colors">{product.name}</h3>
+                  <div className="flex items-center justify-between mt-auto pt-4 border-t dark:border-white/10 border-black/10">
                     <span className="text-gold font-sans font-medium tracking-wide">Rp {product.price.toLocaleString('id-ID')}</span>
                   </div>
                 </div>

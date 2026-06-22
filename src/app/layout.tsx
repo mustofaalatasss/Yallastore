@@ -5,6 +5,7 @@ import CartSidebar from "@/components/CartSidebar";
 import CheckoutModal from "@/components/CheckoutModal";
 import ScrollProgress from "@/components/ScrollProgress";
 import ParticleBackground from "@/components/ParticleBackground";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -30,14 +31,17 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${inter.variable} ${playfair.variable} scroll-smooth antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-screen flex flex-col font-sans bg-background text-foreground overflow-x-hidden">
-        <ScrollProgress />
-        <ParticleBackground />
-        
-        {children}
-        <CartSidebar />
-        <CheckoutModal />
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          <ScrollProgress />
+          <ParticleBackground />
+          
+          {children}
+          <CartSidebar />
+          <CheckoutModal />
+        </ThemeProvider>
       </body>
     </html>
   );

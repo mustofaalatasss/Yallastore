@@ -49,18 +49,18 @@ export default function AdminLoginPage() {
       <div className="relative z-10 w-full max-w-md">
         <Link 
           href="/"
-          className="inline-flex items-center text-white/60 hover:text-white transition-colors mb-8"
+          className="inline-flex items-center dark:text-white text-gray-900/60 hover:dark:text-white text-gray-900 transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Kembali ke Toko
         </Link>
 
-        <div className="bg-[#1A1A1A] border border-white/10 rounded-2xl p-8 shadow-2xl backdrop-blur-xl">
+        <div className="bg-[#1A1A1A] border dark:border-white/10 border-black/10 rounded-2xl p-8 shadow-2xl backdrop-blur-xl">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-black text-white uppercase tracking-wider mb-2">
+            <h1 className="text-3xl font-black dark:text-white text-gray-900 uppercase tracking-wider mb-2">
               Yalla<span className="text-[#E60000]">Store</span>
             </h1>
-            <p className="text-white/60">Login ke Admin Dashboard</p>
+            <p className="dark:text-white text-gray-900/60">Login ke Admin Dashboard</p>
           </div>
 
           {error && (
@@ -71,7 +71,7 @@ export default function AdminLoginPage() {
 
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
+              <label className="block text-sm font-medium dark:text-white text-gray-900/80 mb-2">
                 Email
               </label>
               <input
@@ -79,13 +79,13 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full bg-[#222222] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#E60000] transition-colors"
+                className="w-full bg-[#222222] border dark:border-white/10 border-black/10 rounded-xl px-4 py-3 dark:text-white text-gray-900 focus:outline-none focus:border-[#E60000] transition-colors"
                 placeholder="admin@yallastore.com"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
+              <label className="block text-sm font-medium dark:text-white text-gray-900/80 mb-2">
                 Password
               </label>
               <input
@@ -93,7 +93,7 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full bg-[#222222] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#E60000] transition-colors"
+                className="w-full bg-[#222222] border dark:border-white/10 border-black/10 rounded-xl px-4 py-3 dark:text-white text-gray-900 focus:outline-none focus:border-[#E60000] transition-colors"
                 placeholder="••••••••"
               />
             </div>
@@ -101,7 +101,7 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-[#E60000] hover:bg-[#CC0000] text-white font-bold py-3 px-4 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+              className="w-full bg-[#E60000] hover:bg-[#CC0000] dark:text-white text-gray-900 font-bold py-3 px-4 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
             >
               {isLoading ? (
                 <Loader2 className="w-5 h-5 animate-spin" />

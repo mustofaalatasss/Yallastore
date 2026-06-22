@@ -35,14 +35,14 @@ export default function ProductShowcase({ products = [] }: { products?: any[] })
   }, []);
 
   return (
-    <section id="new-arrival" className="py-24 bg-[#0a0a0a]" ref={containerRef}>
+    <section id="new-arrival" className="py-24 dark:bg-[#0a0a0a] bg-gray-50" ref={containerRef}>
       <div className="container mx-auto px-6 md:px-12">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
           <div>
-            <h2 className="text-3xl md:text-5xl font-serif text-white mb-4">Latest Arrival</h2>
+            <h2 className="text-3xl md:text-5xl font-serif dark:text-white text-gray-900 mb-4">Latest Arrival</h2>
             <div className="w-16 h-1 bg-primary"></div>
           </div>
-          <button className="text-silver hover:text-white border-b border-transparent hover:border-white transition-all uppercase tracking-widest text-xs pb-1">
+          <button className="dark:text-silver text-gray-600 hover:dark:text-white text-gray-900 border-b border-transparent hover:border-white transition-all uppercase tracking-widest text-xs pb-1">
             View All Products
           </button>
         </div>
@@ -66,7 +66,7 @@ export default function ProductShowcase({ products = [] }: { products?: any[] })
                 description: product.description
               })}
             >
-              <div className="relative w-full aspect-square bg-[#111] overflow-hidden mb-6 border border-white/5 group-hover:border-white/20 transition-colors duration-500">
+              <div className="relative w-full aspect-square dark:bg-[#111] bg-gray-100 overflow-hidden mb-6 border dark:border-white/5 border-black/5 group-hover:dark:border-white/20 border-black/20 transition-colors duration-500">
                 <Image
                   src={product.image}
                   alt={product.name}
@@ -108,7 +108,7 @@ export default function ProductShowcase({ products = [] }: { products?: any[] })
                         description: product.description
                       });
                     }}
-                    className="w-full bg-black/80 text-white py-3 border border-white/20 font-sans uppercase tracking-widest text-xs hover:bg-white/10 transition-colors flex items-center justify-center gap-2 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 duration-500 delay-75"
+                    className="w-full dark:bg-black/80 bg-white/80 dark:text-white text-gray-900 py-3 border dark:border-white/20 border-black/20 font-sans uppercase tracking-widest text-xs hover:bg-white/10 transition-colors flex items-center justify-center gap-2 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 duration-500 delay-75"
                   >
                     <Eye size={16} /> Quick View
                   </button>
@@ -116,10 +116,10 @@ export default function ProductShowcase({ products = [] }: { products?: any[] })
               </div>
 
               <div className="flex flex-col flex-grow">
-                  <span className="text-silver text-xs font-sans tracking-widest uppercase mb-2 block">{product.category?.name || "Uncategorized"}</span>
-                  <h3 className="text-white font-serif text-xl mb-2 group-hover:text-primary transition-colors">{product.name}</h3>
-                  <div className="flex justify-between items-center mt-auto pt-4 border-t border-white/5">
-                    <span className="text-white font-mono">Rp {product.price.toLocaleString('id-ID')}</span>
+                  <span className="dark:text-silver text-gray-600 text-xs font-sans tracking-widest uppercase mb-2 block">{product.category?.name || "Uncategorized"}</span>
+                  <h3 className="dark:text-white text-gray-900 font-serif text-xl mb-2 group-hover:text-primary transition-colors">{product.name}</h3>
+                  <div className="flex justify-between items-center mt-auto pt-4 border-t dark:border-white/5 border-black/5">
+                    <span className="dark:text-white text-gray-900 font-mono">Rp {product.price.toLocaleString('id-ID')}</span>
                     <div className="flex items-center gap-1 text-primary">
                       <Star className="w-4 h-4 fill-current" />
                       <span className="text-sm font-sans">{product.rating || 5.0}</span>

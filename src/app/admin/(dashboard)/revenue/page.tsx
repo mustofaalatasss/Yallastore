@@ -31,18 +31,18 @@ export default function RevenuePage() {
   }, [days]);
 
   if (loading && !data) {
-    return <div className="text-white text-center py-20 animate-pulse">Loading revenue analytics...</div>;
+    return <div className="dark:text-white text-gray-900 text-center py-20 animate-pulse">Loading revenue analytics...</div>;
   }
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-serif text-white mb-2">Revenue Analytics</h1>
-          <p className="text-silver text-sm">Detailed breakdown of your store's financial performance.</p>
+          <h1 className="text-3xl font-serif dark:text-white text-gray-900 mb-2">Revenue Analytics</h1>
+          <p className="dark:text-silver text-gray-600 text-sm">Detailed breakdown of your store's financial performance.</p>
         </div>
         
-        <div className="flex gap-2 bg-[#0a0a0a] border border-white/5 p-1 rounded-xl w-max">
+        <div className="flex gap-2 dark:bg-[#0a0a0a] bg-gray-50 border dark:border-white/5 border-black/5 p-1 rounded-xl w-max">
           {[7, 30, 90].map((d) => (
             <button
               key={d}
@@ -50,7 +50,7 @@ export default function RevenuePage() {
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                 days === d 
                   ? "bg-primary text-black shadow-[0_0_10px_rgba(230,0,0,0.5)]" 
-                  : "text-silver hover:text-white hover:bg-white/5"
+                  : "dark:text-silver text-gray-600 hover:dark:text-white text-gray-900 hover:bg-white/5"
               }`}
             >
               Last {d} Days
@@ -61,50 +61,50 @@ export default function RevenuePage() {
 
       {/* Top Metric Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-gradient-to-br from-[#111] to-[#050505] p-6 rounded-2xl border border-white/5 relative overflow-hidden group hover:border-primary/30 transition-all">
+        <div className="bg-gradient-to-br from-[#111] to-[#050505] p-6 rounded-2xl border dark:border-white/5 border-black/5 relative overflow-hidden group hover:border-primary/30 transition-all">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-xs text-silver font-sans uppercase tracking-[0.2em]">Total Revenue</p>
-            <div className="w-10 h-10 rounded-xl bg-[#222] border border-white/10 flex items-center justify-center text-primary">
+            <p className="text-xs dark:text-silver text-gray-600 font-sans uppercase tracking-[0.2em]">Total Revenue</p>
+            <div className="w-10 h-10 rounded-xl bg-[#222] border dark:border-white/10 border-black/10 flex items-center justify-center text-primary">
               <DollarSign size={20} />
             </div>
           </div>
-          <h3 className="text-4xl font-serif text-white mb-2">Rp {(data?.totalRevenue || 0).toLocaleString('id-ID')}</h3>
-          <p className="text-xs text-silver">Over the last {days} days</p>
+          <h3 className="text-4xl font-serif dark:text-white text-gray-900 mb-2">Rp {(data?.totalRevenue || 0).toLocaleString('id-ID')}</h3>
+          <p className="text-xs dark:text-silver text-gray-600">Over the last {days} days</p>
         </div>
         
-        <div className="bg-gradient-to-br from-[#111] to-[#050505] p-6 rounded-2xl border border-white/5 relative overflow-hidden group hover:border-primary/30 transition-all">
+        <div className="bg-gradient-to-br from-[#111] to-[#050505] p-6 rounded-2xl border dark:border-white/5 border-black/5 relative overflow-hidden group hover:border-primary/30 transition-all">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-xs text-silver font-sans uppercase tracking-[0.2em]">Total Orders</p>
-            <div className="w-10 h-10 rounded-xl bg-[#222] border border-white/10 flex items-center justify-center text-primary">
+            <p className="text-xs dark:text-silver text-gray-600 font-sans uppercase tracking-[0.2em]">Total Orders</p>
+            <div className="w-10 h-10 rounded-xl bg-[#222] border dark:border-white/10 border-black/10 flex items-center justify-center text-primary">
               <TrendingUp size={20} />
             </div>
           </div>
-          <h3 className="text-4xl font-serif text-white mb-2">
+          <h3 className="text-4xl font-serif dark:text-white text-gray-900 mb-2">
             {data?.revenueByDate?.reduce((acc: number, curr: any) => acc + curr.ordersCount, 0) || 0}
           </h3>
-          <p className="text-xs text-silver">Completed orders</p>
+          <p className="text-xs dark:text-silver text-gray-600">Completed orders</p>
         </div>
 
-        <div className="bg-gradient-to-br from-[#111] to-[#050505] p-6 rounded-2xl border border-white/5 relative overflow-hidden group hover:border-primary/30 transition-all">
+        <div className="bg-gradient-to-br from-[#111] to-[#050505] p-6 rounded-2xl border dark:border-white/5 border-black/5 relative overflow-hidden group hover:border-primary/30 transition-all">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-xs text-silver font-sans uppercase tracking-[0.2em]">Avg. Order Value</p>
-            <div className="w-10 h-10 rounded-xl bg-[#222] border border-white/10 flex items-center justify-center text-primary">
+            <p className="text-xs dark:text-silver text-gray-600 font-sans uppercase tracking-[0.2em]">Avg. Order Value</p>
+            <div className="w-10 h-10 rounded-xl bg-[#222] border dark:border-white/10 border-black/10 flex items-center justify-center text-primary">
               <Calendar size={20} />
             </div>
           </div>
-          <h3 className="text-4xl font-serif text-white mb-2">
+          <h3 className="text-4xl font-serif dark:text-white text-gray-900 mb-2">
             Rp {data?.totalRevenue && data?.revenueByDate 
                 ? (data.totalRevenue / data.revenueByDate.reduce((acc: number, curr: any) => acc + curr.ordersCount, 0)).toLocaleString('id-ID', { maximumFractionDigits: 0 }) 
                 : 0}
           </h3>
-          <p className="text-xs text-silver">Average per order</p>
+          <p className="text-xs dark:text-silver text-gray-600">Average per order</p>
         </div>
       </div>
 
       {/* Revenue Area Chart */}
-      <div className="bg-[#0a0a0a]/50 backdrop-blur-sm border border-white/5 rounded-2xl p-6 shadow-xl relative">
+      <div className="dark:bg-[#0a0a0a] bg-gray-50/50 backdrop-blur-sm border dark:border-white/5 border-black/5 rounded-2xl p-6 shadow-xl relative">
         {loading && <div className="absolute inset-0 bg-black/50 backdrop-blur-sm z-10 flex items-center justify-center rounded-2xl"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div></div>}
-        <h2 className="text-xl font-serif text-white mb-6 flex items-center gap-3">
+        <h2 className="text-xl font-serif dark:text-white text-gray-900 mb-6 flex items-center gap-3">
           <span className="w-1.5 h-6 bg-primary rounded-full inline-block shadow-[0_0_8px_rgba(230,0,0,0.8)]"></span>
           Revenue Timeline
         </h2>
@@ -144,17 +144,17 @@ export default function RevenuePage() {
       </div>
 
       {/* Top Selling Products */}
-      <div className="bg-[#0a0a0a]/50 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden shadow-xl relative">
+      <div className="dark:bg-[#0a0a0a] bg-gray-50/50 backdrop-blur-sm border dark:border-white/5 border-black/5 rounded-2xl overflow-hidden shadow-xl relative">
         {loading && <div className="absolute inset-0 bg-black/50 backdrop-blur-sm z-10 rounded-2xl"></div>}
-        <div className="p-6 border-b border-white/5 flex items-center justify-between bg-gradient-to-r from-white/[0.02] to-transparent">
-          <h2 className="text-xl font-serif text-white flex items-center gap-3">
+        <div className="p-6 border-b dark:border-white/5 border-black/5 flex items-center justify-between bg-gradient-to-r from-white/[0.02] to-transparent">
+          <h2 className="text-xl font-serif dark:text-white text-gray-900 flex items-center gap-3">
             <span className="w-1.5 h-6 bg-primary rounded-full inline-block shadow-[0_0_8px_rgba(230,0,0,0.8)]"></span>
             Top Earning Products
           </h2>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-silver font-sans">
-            <thead className="bg-[#111]/80 text-xs uppercase tracking-[0.2em] text-white/40">
+          <table className="w-full text-left text-sm dark:text-silver text-gray-600 font-sans">
+            <thead className="dark:bg-[#111] bg-gray-100/80 text-xs uppercase tracking-[0.2em] dark:text-white text-gray-900/40">
               <tr>
                 <th className="px-6 py-5 font-medium">Rank</th>
                 <th className="px-6 py-5 font-medium">Product Name</th>
@@ -165,7 +165,7 @@ export default function RevenuePage() {
             <tbody className="divide-y divide-white/5">
               {data?.topProducts?.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="px-6 py-12 text-center text-silver/40">No sales data for this period.</td>
+                  <td colSpan={4} className="px-6 py-12 text-center dark:text-silver text-gray-600/40">No sales data for this period.</td>
                 </tr>
               ) : (
                 data?.topProducts?.map((product: any, index: number) => (
@@ -175,13 +175,13 @@ export default function RevenuePage() {
                         index === 0 ? 'bg-yellow-500/20 text-yellow-500' : 
                         index === 1 ? 'bg-gray-400/20 text-gray-300' : 
                         index === 2 ? 'bg-orange-600/20 text-orange-500' : 
-                        'bg-white/5 text-silver'
+                        'bg-white/5 dark:text-silver text-gray-600'
                       }`}>
                         {index + 1}
                       </span>
                     </td>
-                    <td className="px-6 py-4 font-medium text-white">{product.productName}</td>
-                    <td className="px-6 py-4 text-right text-silver">{product.totalSold}</td>
+                    <td className="px-6 py-4 font-medium dark:text-white text-gray-900">{product.productName}</td>
+                    <td className="px-6 py-4 text-right dark:text-silver text-gray-600">{product.totalSold}</td>
                     <td className="px-6 py-4 text-right font-medium text-primary">Rp {product.revenueGenerated.toLocaleString('id-ID')}</td>
                   </tr>
                 ))

@@ -30,7 +30,7 @@ export default async function Home() {
   const finalBestSellers = bestSellerProducts.length > 0 ? bestSellerProducts : allProds.slice(0, 6);
 
   return (
-    <main className="bg-black min-h-screen text-white overflow-hidden">
+    <main className="bg-black min-h-screen dark:text-white text-gray-900 overflow-hidden">
       <Preloader />
       <Navbar />
       <HeroSection />

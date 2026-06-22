@@ -17,9 +17,9 @@ export default function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 h-screen bg-[#050505]/80 backdrop-blur-xl border-r border-white/5 flex flex-col fixed left-0 top-0 z-40 shadow-2xl">
+    <aside className="w-64 h-screen dark:bg-[#050505] bg-white/80 backdrop-blur-xl border-r dark:border-white/5 border-black/5 flex flex-col fixed left-0 top-0 z-40 shadow-2xl">
       {/* Logo */}
-      <div className="h-20 flex items-center justify-center border-b border-white/5">
+      <div className="h-20 flex items-center justify-center border-b dark:border-white/5 border-black/5">
         <Link href="/" className="flex items-center gap-2 hover:scale-105 transition-transform duration-300">
           <Image
             src="/assets/Loggo_Brand-removebg-preview.png"
@@ -42,8 +42,8 @@ export default function AdminSidebar() {
               className={cn(
                 "flex items-center gap-4 px-6 py-3.5 rounded-r-2xl text-xs font-sans uppercase tracking-[0.2em] transition-all duration-300 group relative",
                 isActive 
-                  ? "bg-gradient-to-r from-primary/20 via-primary/5 to-transparent text-white font-medium" 
-                  : "text-silver hover:bg-white/5 hover:text-white"
+                  ? "bg-gradient-to-r from-primary/20 via-primary/5 to-transparent dark:text-white text-gray-900 font-medium" 
+                  : "dark:text-silver text-gray-600 hover:bg-white/5 hover:dark:text-white text-gray-900"
               )}
             >
               {isActive && (
@@ -57,7 +57,7 @@ export default function AdminSidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="p-4 border-t border-white/5 bg-gradient-to-t from-black/50 to-transparent">
+      <div className="p-4 border-t dark:border-white/5 border-black/5 bg-gradient-to-t from-black/50 to-transparent">
         <button 
           onClick={async () => {
             await import("@/lib/auth-client").then(m => m.signOut());

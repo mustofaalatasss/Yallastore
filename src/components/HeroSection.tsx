@@ -137,20 +137,20 @@ export default function HeroSection() {
         <source src="/assets/opening.mp4" type="video/mp4" />
       </video>
 
-      {/* Overlay: Changed from bg-black/60 to bg-black/30 to make it brighter */}
+      {/* Overlay: Changed from dark:bg-black/60 bg-white/60 to bg-black/30 to make it brighter */}
       <div className="absolute inset-0 bg-black/30 z-10" />
 
       {/* Content */}
       <div className="relative z-20 text-center px-4 max-w-5xl mx-auto mt-20">
         <h1
           ref={titleRef}
-          className="text-4xl md:text-6xl lg:text-7xl font-serif text-white mb-6 leading-tight drop-shadow-2xl animate-sweep"
+          className="text-4xl md:text-6xl lg:text-7xl font-serif dark:text-white text-gray-900 mb-6 leading-tight drop-shadow-2xl animate-sweep"
         >
 
         </h1>
         <p
           ref={subtitleRef}
-          className="text-lg md:text-xl text-silver font-sans tracking-wide mb-10 max-w-2xl mx-auto drop-shadow-md"
+          className="text-lg md:text-xl dark:text-silver text-gray-600 font-sans tracking-wide mb-10 max-w-2xl mx-auto drop-shadow-md"
         >
           Wear Your Favorite Anime With Style. Exclusive designs crafted for the true fans.
         </p>

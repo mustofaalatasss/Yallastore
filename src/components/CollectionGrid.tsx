@@ -18,8 +18,8 @@ export default function CollectionGrid({ products, title }: CollectionGridProps)
 
   if (products.length === 0) {
     return (
-      <div className="py-20 text-center border border-white/10 bg-[#0a0a0a] rounded-lg">
-        <p className="text-silver font-sans">No products found in this collection yet.</p>
+      <div className="py-20 text-center border dark:border-white/10 border-black/10 dark:bg-[#0a0a0a] bg-gray-50 rounded-lg">
+        <p className="dark:text-silver text-gray-600 font-sans">No products found in this collection yet.</p>
       </div>
     );
   }
@@ -45,7 +45,7 @@ export default function CollectionGrid({ products, title }: CollectionGridProps)
               className="group flex flex-col cursor-pointer"
               onClick={() => setSelectedProduct(product)}
             >
-              <div className="relative w-full aspect-square bg-[#111] overflow-hidden mb-6 border border-white/5 group-hover:border-primary/30 transition-colors duration-500 rounded-lg">
+              <div className="relative w-full aspect-square dark:bg-[#111] bg-gray-100 overflow-hidden mb-6 border dark:border-white/5 border-black/5 group-hover:border-primary/30 transition-colors duration-500 rounded-lg">
                 {productData.badge && (
                   <div className={`absolute top-4 left-4 z-10 text-[10px] font-bold px-3 py-1 uppercase tracking-widest rounded-sm ${getBadgeColor(productData.badge)}`}>
                     {productData.badge}
@@ -83,7 +83,7 @@ export default function CollectionGrid({ products, title }: CollectionGridProps)
                       e.stopPropagation();
                       setSelectedProduct(product);
                     }}
-                    className="w-full bg-black/80 text-white py-3 border border-white/20 font-sans uppercase tracking-widest text-xs hover:bg-white/10 transition-colors flex items-center justify-center gap-2 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 duration-500 delay-75 rounded"
+                    className="w-full dark:bg-black/80 bg-white/80 dark:text-white text-gray-900 py-3 border dark:border-white/20 border-black/20 font-sans uppercase tracking-widest text-xs hover:bg-white/10 transition-colors flex items-center justify-center gap-2 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 duration-500 delay-75 rounded"
                   >
                     <Eye size={16} /> Quick View
                   </button>
@@ -91,12 +91,12 @@ export default function CollectionGrid({ products, title }: CollectionGridProps)
               </div>
 
               <div className="flex flex-col flex-grow px-2">
-                <span className="text-[10px] uppercase tracking-widest text-silver mb-2">{title}</span>
-                <h3 className="text-lg font-serif text-white mb-2 leading-tight group-hover:text-primary transition-colors">{product.name}</h3>
+                <span className="text-[10px] uppercase tracking-widest dark:text-silver text-gray-600 mb-2">{title}</span>
+                <h3 className="text-lg font-serif dark:text-white text-gray-900 mb-2 leading-tight group-hover:text-primary transition-colors">{product.name}</h3>
                 
-                <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/10">
+                <div className="flex items-center justify-between mt-auto pt-4 border-t dark:border-white/10 border-black/10">
                   <span className="text-gold font-sans font-medium tracking-wide">{product.price}</span>
-                  <div className="flex items-center gap-1 text-silver text-xs">
+                  <div className="flex items-center gap-1 dark:text-silver text-gray-600 text-xs">
                     <Star size={12} className="fill-gold text-gold" />
                     {product.rating}
                   </div>

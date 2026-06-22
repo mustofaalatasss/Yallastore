@@ -21,7 +21,7 @@ export default async function AdminLayout({
     console.log("SESSION FOUND ON SERVER SIDE:", session.user.email);
   }
   return (
-    <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-primary selection:text-black">
+    <div className="min-h-screen dark:bg-[#050505] bg-white dark:text-white text-gray-900 font-sans selection:bg-primary selection:text-black">
       <AdminSidebar />
       <div className="flex flex-col min-h-screen">
         <AdminNavbar />

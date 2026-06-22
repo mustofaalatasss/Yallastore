@@ -71,13 +71,13 @@ export default function FeaturedCategories() {
   }, []);
 
   return (
-    <section id="collection" className="py-24 bg-[#050505]" ref={containerRef}>
+    <section id="collection" className="py-24 dark:bg-[#050505] bg-white" ref={containerRef}>
       <div className="container mx-auto px-6 md:px-12 mb-16 text-center">
-        <h2 className="text-3xl md:text-5xl font-serif text-white mb-4">Featured Collections</h2>
+        <h2 className="text-3xl md:text-5xl font-serif dark:text-white text-gray-900 mb-4">Featured Collections</h2>
         <div className="w-16 h-1 bg-primary mx-auto"></div>
       </div>
 
-      <div className="w-full h-[60vh] md:h-[80vh] flex overflow-hidden border-y border-white/10 group/container">
+      <div className="w-full h-[60vh] md:h-[80vh] flex overflow-hidden border-y dark:border-white/10 border-black/10 group/container">
         {categories.map((cat, index) => {
           const isActive = activeIndex === index;
 
@@ -93,7 +93,7 @@ export default function FeaturedCategories() {
                 }
               }}
               className={cn(
-                "group relative flex-1 transition-all duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)] cursor-pointer border-r border-white/5 last:border-r-0 bg-black overflow-hidden flex items-end justify-center pb-12",
+                "group relative flex-1 transition-all duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)] cursor-pointer border-r dark:border-white/5 border-black/5 last:border-r-0 bg-black overflow-hidden flex items-end justify-center pb-12",
                 isTouch ? (isActive ? "flex-[2]" : "flex-1") : "hover:flex-[2]"
               )}
             >
@@ -129,7 +129,7 @@ export default function FeaturedCategories() {
                 "relative z-10 transition-all duration-500 delay-100 pointer-events-none",
                 isTouch ? (isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10") : "opacity-0 translate-y-10 group-hover:opacity-100 group-hover:translate-y-0"
               )}>
-                <h3 className="text-2xl md:text-4xl font-serif text-white uppercase tracking-widest drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)] font-bold text-center px-4">
+                <h3 className="text-2xl md:text-4xl font-serif dark:text-white text-gray-900 uppercase tracking-widest drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)] font-bold text-center px-4">
                   {cat.name}
                 </h3>
               </div>

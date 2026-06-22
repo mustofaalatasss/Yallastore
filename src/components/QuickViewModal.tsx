@@ -93,7 +93,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
       {/* Backdrop */}
       <div 
         className={cn(
-          "absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity duration-300",
+          "absolute inset-0 dark:bg-black/80 bg-white/80 backdrop-blur-sm transition-opacity duration-300",
           isClosing ? "opacity-0" : "opacity-100"
         )}
         onClick={handleClose}
@@ -102,14 +102,14 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
       {/* Modal Content */}
       <div 
         className={cn(
-          "relative w-[95vw] md:w-[90vw] max-w-7xl h-[90vh] md:h-[85vh] bg-[#111] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col md:flex-row transition-all duration-300 transform rounded-xl",
+          "relative w-[95vw] md:w-[90vw] max-w-7xl h-[90vh] md:h-[85vh] dark:bg-[#111] bg-gray-100 border dark:border-white/10 border-black/10 shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col md:flex-row transition-all duration-300 transform rounded-xl",
           isClosing ? "opacity-0 scale-95" : "opacity-100 scale-100"
         )}
       >
         {/* Close Button */}
         <button 
           onClick={handleClose}
-          className="absolute top-4 right-4 z-10 text-white/50 hover:text-white bg-black/50 hover:bg-black/80 rounded-full p-2 transition-all"
+          className="absolute top-4 right-4 z-10 dark:text-white text-gray-900/50 hover:dark:text-white text-gray-900 bg-black/50 hover:dark:bg-black/80 bg-white/80 rounded-full p-2 transition-all"
         >
           <X size={20} />
         </button>
@@ -117,16 +117,16 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
         {localProduct && (
           <>
             {/* Image Section */}
-            <div className="w-full md:w-3/5 relative h-[40vh] md:h-full flex-shrink-0 bg-[#0a0a0a] group overflow-hidden cursor-zoom-in">
+            <div className="w-full md:w-3/5 relative h-[40vh] md:h-full flex-shrink-0 dark:bg-[#0a0a0a] bg-gray-50 group overflow-hidden cursor-zoom-in">
               {showSizeGuide ? (
-                <div className="absolute inset-0 z-20 bg-black/90 flex flex-col items-center justify-center p-6 animate-in fade-in duration-300">
+                <div className="absolute inset-0 z-20 dark:bg-black/90 bg-white/90 flex flex-col items-center justify-center p-6 animate-in fade-in duration-300">
                   <button 
                     onClick={() => setShowSizeGuide(false)}
-                    className="absolute top-4 right-4 text-white/50 hover:text-white bg-black/50 hover:bg-black/80 rounded-full p-2 transition-all z-30"
+                    className="absolute top-4 right-4 dark:text-white text-gray-900/50 hover:dark:text-white text-gray-900 bg-black/50 hover:dark:bg-black/80 bg-white/80 rounded-full p-2 transition-all z-30"
                   >
                     <X size={20} />
                   </button>
-                  <h3 className="text-white font-serif mb-4 text-xl absolute top-6 left-6 z-30">Size Guide</h3>
+                  <h3 className="dark:text-white text-gray-900 font-serif mb-4 text-xl absolute top-6 left-6 z-30">Size Guide</h3>
                   <div className="relative w-full h-full mt-8">
                     <Image src="/assets/size-guide.jpg" alt="Size Guide" fill className="object-contain" unoptimized />
                   </div>
@@ -145,7 +145,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
                     className="object-contain transition-transform duration-700 ease-out group-hover:scale-125"
                   />
                   {/* Hint badge */}
-                  <div className="absolute top-4 left-4 bg-black/50 backdrop-blur-md text-white/80 px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-sans pointer-events-none opacity-100 group-hover:opacity-0 transition-opacity duration-300">
+                  <div className="absolute top-4 left-4 bg-black/50 backdrop-blur-md dark:text-white text-gray-900/80 px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-sans pointer-events-none opacity-100 group-hover:opacity-0 transition-opacity duration-300">
                     Hover to Zoom
                   </div>
                 </>
@@ -154,10 +154,10 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
 
             {/* Details Section */}
             <div className="w-full md:w-2/5 p-6 md:p-12 flex flex-col bg-gradient-to-br from-[#111] to-black overflow-y-auto flex-1">
-              <span className="text-xs uppercase tracking-[0.2em] text-silver mb-3 block">
+              <span className="text-xs uppercase tracking-[0.2em] dark:text-silver text-gray-600 mb-3 block">
                 {localProduct.category}
               </span>
-              <h2 className="text-3xl md:text-4xl font-serif text-white mb-4 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-serif dark:text-white text-gray-900 mb-4 leading-tight">
                 {localProduct.name}
               </h2>
               
@@ -172,22 +172,22 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
                     ))}
                   </div>
                   {localProduct.rating && (
-                    <span className="text-silver text-sm">{localProduct.rating}</span>
+                    <span className="dark:text-silver text-gray-600 text-sm">{localProduct.rating}</span>
                   )}
                 </div>
               </div>
 
               <div className="h-[1px] w-full bg-white/10 mb-6"></div>
 
-              <p className="text-silver/80 font-sans text-sm leading-relaxed mb-6 whitespace-pre-line">
+              <p className="dark:text-silver text-gray-600/80 font-sans text-sm leading-relaxed mb-6 whitespace-pre-line">
                 {localProduct.description || `Premium quality streetwear featuring intricate ${localProduct.category} designs. Made with 100% heavy cotton for maximum comfort and durability.`}
               </p>
 
               {/* Color Selector */}
               <div className="mb-6">
                 <div className="flex justify-between items-center mb-3">
-                  <span className="text-sm text-white font-sans uppercase tracking-wider">
-                    Color: <span className="text-silver">{selectedColor}</span>
+                  <span className="text-sm dark:text-white text-gray-900 font-sans uppercase tracking-wider">
+                    Color: <span className="dark:text-silver text-gray-600">{selectedColor}</span>
                   </span>
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -219,7 +219,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
                           )}
                         >
                           <span 
-                            className="w-7 h-7 rounded-full shadow-inner border border-white/10" 
+                            className="w-7 h-7 rounded-full shadow-inner border dark:border-white/10 border-black/10" 
                             style={{ backgroundColor: displayHex }}
                           />
                         </button>
@@ -231,10 +231,10 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
               {/* Size Selector */}
               <div className="mb-8">
                 <div className="flex justify-between items-center mb-3">
-                  <span className="text-sm text-white font-sans uppercase tracking-wider">Select Size</span>
+                  <span className="text-sm dark:text-white text-gray-900 font-sans uppercase tracking-wider">Select Size</span>
                   <button 
                     onClick={() => setShowSizeGuide(true)}
-                    className="text-xs text-silver hover:text-white underline underline-offset-4"
+                    className="text-xs dark:text-silver text-gray-600 hover:dark:text-white text-gray-900 underline underline-offset-4"
                   >
                     Size Guide
                   </button>
@@ -248,7 +248,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
                         "px-4 py-2 text-sm font-sans uppercase tracking-widest border transition-all duration-300",
                         selectedSize === size 
                           ? "bg-white text-black border-white" 
-                          : "bg-transparent text-silver border-white/20 hover:border-white hover:text-white"
+                          : "bg-transparent dark:text-silver text-gray-600 dark:border-white/20 border-black/20 hover:border-white hover:dark:text-white text-gray-900"
                       )}
                     >
                       {size}

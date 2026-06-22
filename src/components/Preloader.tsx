@@ -65,8 +65,8 @@ export default function Preloader() {
       className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black overflow-hidden"
     >
       {/* Cinematic wide frame for the eyes */}
-      {/* Mengganti border-white/20 menjadi border-white/5 agar lebih senada dengan latar */}
-      <div className="relative w-full h-[40vh] md:h-[50vh] border-y border-white/5 overflow-hidden flex items-center justify-center bg-zinc-950">
+      {/* Mengganti dark:border-white/20 border-black/20 menjadi dark:border-white/5 border-black/5 agar lebih senada dengan latar */}
+      <div className="relative w-full h-[40vh] md:h-[50vh] border-y dark:border-white/5 border-black/5 overflow-hidden flex items-center justify-center bg-zinc-950">
         {characters.map((src, index) => (
           <Image
             key={src}

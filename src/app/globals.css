@@ -1,6 +1,25 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
+  /* Light Mode Variables */
+  --background: #fdfdfd;
+  --foreground: #050505;
+  --color-primary: #E60000;
+  --color-gold: #D4AF37;
+  --color-silver: #606060;
+  --color-dark-gray: #e0e0e0;
+  
+  /* Anime Accents */
+  --color-naruto: #ff7b00;
+  --color-onepiece: #00a8ff;
+  --color-jujutsu: #8a2be2;
+  --color-demonslayer: #ff3838;
+}
+
+.dark {
+  /* Dark Mode Variables */
   --background: #050505;
   --foreground: #f8f8f8;
   --color-primary: #E60000;

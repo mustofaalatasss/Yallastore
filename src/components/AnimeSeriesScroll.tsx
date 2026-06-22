@@ -94,7 +94,7 @@ function ProductShowcase({ series }: { series: typeof seriesData[0] }) {
         <span className={cn("text-xs md:text-sm uppercase tracking-[0.3em] font-bold drop-shadow-md", series.accent)}>
           {series.tagline}
         </span>
-        <h3 className="text-5xl md:text-7xl lg:text-8xl font-serif text-white leading-none drop-shadow-2xl">
+        <h3 className="text-5xl md:text-7xl lg:text-8xl font-serif dark:text-white text-gray-900 leading-none drop-shadow-2xl">
           {series.name}
         </h3>
         <div className="h-[1px] w-full bg-white/20 my-4"></div>
@@ -108,7 +108,7 @@ function ProductShowcase({ series }: { series: typeof seriesData[0] }) {
               <span 
                 key={product.name} 
                 className={cn(
-                  "text-white font-bold text-xl md:text-2xl block absolute inset-0 transition-all duration-500",
+                  "dark:text-white text-gray-900 font-bold text-xl md:text-2xl block absolute inset-0 transition-all duration-500",
                   index === currentIndex ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"
                 )}
               >
@@ -164,7 +164,7 @@ export default function AnimeSeriesScroll() {
   return (
     <section id="series" className="bg-black relative h-screen overflow-hidden">
       <div className="absolute top-24 left-6 md:left-12 z-20 pointer-events-none mix-blend-difference">
-        <h2 className="text-3xl md:text-5xl font-serif text-white tracking-widest uppercase drop-shadow-lg">Anime Series</h2>
+        <h2 className="text-3xl md:text-5xl font-serif dark:text-white text-gray-900 tracking-widest uppercase drop-shadow-lg">Anime Series</h2>
         <div className="w-16 h-1 bg-white mt-4 shadow-[0_0_10px_white]"></div>
       </div>
 

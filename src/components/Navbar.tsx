@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { useCartStore } from "@/store/useCartStore";
 import { useUIStore } from "@/store/useUIStore";
 import SearchModal from "./SearchModal";
+import { ThemeToggle } from "./ThemeToggle";
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -60,7 +61,7 @@ export default function Navbar() {
       ref={navRef}
       className={cn(
         "fixed top-0 left-0 w-full z-40 transition-all duration-500",
-        isScrolled ? "bg-black/80 backdrop-blur-md border-b border-white/10 py-4 shadow-lg shadow-black/50" : "bg-transparent py-6"
+        isScrolled ? "dark:bg-black/80 bg-white/80 backdrop-blur-md border-b dark:border-white/10 border-black/10 py-4 shadow-lg shadow-black/50" : "bg-transparent py-6"
       )}
     >
       <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
@@ -76,10 +77,10 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Menu */}
-        <ul className="hidden lg:flex items-center space-x-8 text-xs uppercase tracking-widest font-sans text-silver">
+        <ul className="hidden lg:flex items-center space-x-8 text-xs uppercase tracking-widest font-sans dark:text-silver text-gray-600">
           {navLinks.map((link) => (
             <li key={link.name} className="relative group">
-              <Link href={link.href} className="hover:text-white transition-colors duration-300">
+              <Link href={link.href} className="hover:dark:text-white text-gray-900 transition-colors duration-300">
                 {link.name}
               </Link>
               <span className="absolute -bottom-2 left-0 w-0 h-[1px] bg-primary transition-all duration-300 group-hover:w-full"></span>
@@ -89,16 +90,17 @@ export default function Navbar() {
 
         {/* Icons & CTA */}
         <div className="flex items-center space-x-6">
-          <button onClick={() => setIsSearchOpen(true)} className="text-silver hover:text-primary transition-colors duration-300">
+          <ThemeToggle />
+          <button onClick={() => setIsSearchOpen(true)} className="dark:text-silver text-gray-600 hover:text-primary transition-colors duration-300">
             <Search size={20} />
           </button>
-          <Link href="/track-order" className="text-silver hover:text-primary transition-colors duration-300" title="Track Order">
+          <Link href="/track-order" className="dark:text-silver text-gray-600 hover:text-primary transition-colors duration-300" title="Track Order">
             <Package size={20} />
           </Link>
-          <button onClick={openSidebar} className="text-silver hover:text-primary transition-colors duration-300 relative">
+          <button onClick={openSidebar} className="dark:text-silver text-gray-600 hover:text-primary transition-colors duration-300 relative">
             <ShoppingCart size={20} />
             {isMounted && cartItemCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full shadow-lg">
+              <span className="absolute -top-2 -right-2 bg-red-600 dark:text-white text-gray-900 text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full shadow-lg">
                 {cartItemCount}
               </span>
             )}
@@ -109,7 +111,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Toggle */}
           <button 
-            className="lg:hidden text-silver hover:text-primary transition-colors"
+            className="lg:hidden dark:text-silver text-gray-600 hover:text-primary transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -121,7 +123,7 @@ export default function Navbar() {
       {/* Mobile Menu Dropdown */}
       <div 
         className={cn(
-          "lg:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-xl border-t border-primary/20 transition-all duration-300 ease-in-out overflow-hidden shadow-2xl shadow-black",
+          "lg:hidden absolute top-full left-0 w-full dark:bg-black/95 bg-white/95 backdrop-blur-xl border-t border-primary/20 transition-all duration-300 ease-in-out overflow-hidden shadow-2xl shadow-black",
           isMobileMenuOpen ? "max-h-[500px] py-8 opacity-100" : "max-h-0 py-0 opacity-0 pointer-events-none"
         )}
       >
@@ -131,7 +133,7 @@ export default function Navbar() {
               <Link 
                 href={link.href} 
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-sm font-sans uppercase tracking-widest text-silver hover:text-primary transition-colors"
+                className="text-sm font-sans uppercase tracking-widest dark:text-silver text-gray-600 hover:text-primary transition-colors"
               >
                 {link.name}
               </Link>

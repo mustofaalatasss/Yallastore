@@ -10,15 +10,15 @@ export const metadata = {
 
 export default function TrackOrderPage() {
   return (
-    <main className="bg-black min-h-screen text-white pt-32 pb-20">
+    <main className="bg-black min-h-screen dark:text-white text-gray-900 pt-32 pb-20">
       <Navbar />
       <div className="container mx-auto px-6 md:px-12 max-w-4xl">
         <h1 className="text-4xl md:text-5xl font-serif mb-4 text-center uppercase tracking-widest">Track Order</h1>
-        <p className="text-silver text-center font-sans mb-12 max-w-xl mx-auto">
+        <p className="dark:text-silver text-gray-600 text-center font-sans mb-12 max-w-xl mx-auto">
           Enter your Order ID and the WhatsApp number you used during checkout to see the latest status of your shipment.
         </p>
         
-        <Suspense fallback={<div className="text-center text-silver">Loading...</div>}>
+        <Suspense fallback={<div className="text-center dark:text-silver text-gray-600">Loading...</div>}>
           <TrackOrderClient />
         </Suspense>
       </div>

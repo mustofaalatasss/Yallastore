@@ -59,7 +59,7 @@ export default function CinematicBanner() {
       </div>
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/30 z-10" />
+      <div className="absolute inset-0 bg-gradient-to-r dark:from-black/90 dark:via-black/70 dark:to-black/30 from-black/50 via-black/20 to-transparent z-10 transition-colors duration-500" />
 
       {/* Content */}
       <div className="container mx-auto px-6 md:px-12 relative z-20">
@@ -67,10 +67,10 @@ export default function CinematicBanner() {
           <span className="inline-block text-primary uppercase tracking-[0.3em] text-sm mb-4">
             Limited Anime Drop
           </span>
-          <h2 className="text-4xl md:text-6xl font-serif dark:text-white text-gray-900 mb-6 leading-tight drop-shadow-lg">
+          <h2 className="text-4xl md:text-6xl font-serif text-white mb-6 leading-tight drop-shadow-lg">
             Exclusive Design.<br />
             Premium Fabric.<br />
-            <span className="italic dark:text-silver text-gray-600">Anime Identity.</span>
+            <span className="italic text-gray-300">Anime Identity.</span>
           </h2>
           <button className="mt-8 px-10 py-4 bg-primary text-black font-sans uppercase tracking-widest text-sm hover:bg-white transition-all duration-300 shadow-[0_0_20px_rgba(230,0,0,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]">
             Shop Limited Drop

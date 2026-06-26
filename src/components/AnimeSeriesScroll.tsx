@@ -88,7 +88,7 @@ function ProductShowcase({ series }: { series: typeof seriesData[0] }) {
     <>
       {/* Text Content - Glassmorphism Card */}
       <div className={cn(
-        "flex flex-col items-start space-y-6 bg-black/40 backdrop-blur-md p-8 md:p-12 rounded-2xl border",
+        "flex flex-col items-start space-y-6 dark:bg-black/40 bg-white/40 backdrop-blur-md p-8 md:p-12 rounded-2xl border",
         series.borderGlow
       )}>
         <span className={cn("text-xs md:text-sm uppercase tracking-[0.3em] font-bold drop-shadow-md", series.accent)}>
@@ -162,7 +162,7 @@ export default function AnimeSeriesScroll() {
   const activeSeries = seriesData[activeIndex];
 
   return (
-    <section id="series" className="bg-black relative h-screen overflow-hidden">
+    <section id="series" className="dark:bg-black bg-gray-50 relative h-screen overflow-hidden">
       <div className="absolute top-24 left-6 md:left-12 z-20 pointer-events-none mix-blend-difference">
         <h2 className="text-3xl md:text-5xl font-serif dark:text-white text-gray-900 tracking-widest uppercase drop-shadow-lg">Anime Series</h2>
         <div className="w-16 h-1 bg-white mt-4 shadow-[0_0_10px_white]"></div>
@@ -175,19 +175,19 @@ export default function AnimeSeriesScroll() {
         muted 
         playsInline
         onEnded={() => setActiveIndex((prev) => (prev + 1) % seriesData.length)}
-        className="absolute inset-0 w-full h-full object-cover z-0 opacity-60 scale-105 animate-in fade-in duration-1000"
+        className="absolute inset-0 w-full h-full object-cover z-0 dark:opacity-60 opacity-100 scale-105 animate-in fade-in duration-1000"
       >
         <source src={activeSeries.video} type="video/webm" />
       </video>
 
       {/* Gradient Overlay for readability and atmosphere */}
       <div className={cn(
-        "absolute inset-0 z-0 bg-gradient-to-r via-black/50 transition-colors duration-1000",
+        "absolute inset-0 z-0 bg-gradient-to-r dark:via-black/50 via-transparent transition-colors duration-1000",
         activeSeries.bgOverlay
       )}></div>
       
       {/* Vignette effect */}
-      <div className="absolute inset-0 z-0 shadow-[inset_0_0_150px_rgba(0,0,0,0.9)] pointer-events-none"></div>
+      <div className="absolute inset-0 z-0 dark:shadow-[inset_0_0_150px_rgba(0,0,0,0.9)] shadow-[inset_0_0_150px_rgba(0,0,0,0.3)] pointer-events-none"></div>
 
       <div className="w-full h-full flex items-center justify-center relative px-6 md:px-20 overflow-hidden">
         {/* Use key to force re-render and re-trigger animations of text */}

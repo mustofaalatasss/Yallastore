@@ -1,0 +1,49 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbo",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "setup:admin": "npx tsx --env-file=.env.local src/scripts/setup-admin.ts"
+  },
+  "dependencies": {
+    "better-auth": "^1.6.14",
+    "cloudinary": "^2.10.0",
+    "clsx": "^2.1.1",
+    "drizzle-orm": "^0.45.2",
+    "gsap": "^3.15.0",
+    "kysely": "^0.27.2",
+    "lucide-react": "^1.17.0",
+    "next": "16.2.7",
+    "next-cloudinary": "^6.17.5",
+    "next-themes": "^0.4.6",
+    "postgres": "^3.4.9",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "recharts": "^3.8.1",
+    "swiper": "^12.2.0",
+    "tailwind-merge": "^3.6.0",
+    "zod": "^4.4.3",
+    "zustand": "^5.0.14"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "dotenv": "^17.4.2",
+    "drizzle-kit": "^0.31.10",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.7",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "overrides": {
+    "better-auth": {
+      "kysely": "0.27.2"
+    }
+  }
+}

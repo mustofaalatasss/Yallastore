@@ -5,21 +5,24 @@ import { MessageCircle, X, Send, ShoppingCart } from "lucide-react";
 
 function parseMessage(content: string) {
   try {
-    // Mencari blok JSON di dalam teks (antisipasi jika AI membungkus dengan markdown)
-    const jsonMatch = content.match(/```(?:json)?\s*(\{[\s\S]*?\})\s*```/) || content.match(/(\{[\s\S]*"type"[\s\S]*\})/);
-    
-    if (jsonMatch) {
-      const jsonStr = jsonMatch[1];
+    // 1. Coba cari blok JSON dengan markdown (```json ... ```)
+    const mdMatch = content.match(/```(?:json)?\s*(\{[\s\S]*?\})\s*```/);
+    if (mdMatch) {
+      const parsed = JSON.parse(mdMatch[1]);
+      return { ...parsed, rawText: content.replace(mdMatch[0], '').trim() };
+    }
+
+    // 2. Kalau tidak ada markdown, cari kurung kurawal pertama dan terakhir
+    const firstBrace = content.indexOf('{');
+    const lastBrace = content.lastIndexOf('}');
+    if (firstBrace !== -1 && lastBrace > firstBrace && content.includes('"type"')) {
+      const jsonStr = content.substring(firstBrace, lastBrace + 1);
       const parsed = JSON.parse(jsonStr);
-      // Pisahkan teks obrolan biasa (dengan menghapus blok JSON dari pesan aslinya)
-      const textOnly = content.replace(jsonMatch[0], '').trim();
-      return { ...parsed, rawText: textOnly };
+      return { ...parsed, rawText: content.replace(jsonStr, '').trim() };
     }
     
-    // Jika tidak ada JSON, kembalikan sebagai teks biasa
     return { type: "text", text: content };
   } catch (e) {
-    // Jika JSON gagal di-parse, kembalikan teks aslinya
     return { type: "text", text: content };
   }
 }

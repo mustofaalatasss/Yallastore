@@ -1,7 +1,28 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { MessageCircle, X, Send } from "lucide-react";
+import { MessageCircle, X, Send, ShoppingCart } from "lucide-react";
+
+function parseMessage(content: string) {
+  try {
+    // Mencari blok JSON di dalam teks (antisipasi jika AI membungkus dengan markdown)
+    const jsonMatch = content.match(/```(?:json)?\s*(\{[\s\S]*?\})\s*```/) || content.match(/(\{[\s\S]*"type"[\s\S]*\})/);
+    
+    if (jsonMatch) {
+      const jsonStr = jsonMatch[1];
+      const parsed = JSON.parse(jsonStr);
+      // Pisahkan teks obrolan biasa (dengan menghapus blok JSON dari pesan aslinya)
+      const textOnly = content.replace(jsonMatch[0], '').trim();
+      return { ...parsed, rawText: textOnly };
+    }
+    
+    // Jika tidak ada JSON, kembalikan sebagai teks biasa
+    return { type: "text", text: content };
+  } catch (e) {
+    // Jika JSON gagal di-parse, kembalikan teks aslinya
+    return { type: "text", text: content };
+  }
+}
 
 export function FloatingChat() {
   const [isOpen, setIsOpen] = useState(false);
@@ -107,24 +128,97 @@ export function FloatingChat() {
 
           {/* Messages Area */}
           <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-3">
-            {messages.map((msg, idx) => (
-              <div
-                key={idx}
-                className={`flex ${
-                  msg.role === "user" ? "justify-end" : "justify-start"
-                }`}
-              >
+            {messages.map((msg, idx) => {
+              const isUser = msg.role === "user";
+              const parsedContent = isUser ? null : parseMessage(msg.content);
+
+              return (
                 <div
-                  className={`max-w-[85%] rounded-2xl px-4 py-2 text-base ${
-                    msg.role === "user"
-                      ? "bg-primary text-primary-foreground rounded-tr-sm"
-                      : "bg-zinc-800 text-zinc-200 rounded-tl-sm"
+                  key={idx}
+                  className={`flex ${
+                    isUser ? "justify-end" : "justify-start"
                   }`}
                 >
-                  {msg.content}
+                  {isUser ? (
+                    <div className="max-w-[85%] rounded-2xl px-4 py-2 text-base bg-primary text-primary-foreground rounded-tr-sm">
+                      {msg.content}
+                    </div>
+                  ) : (
+                    <div className="flex flex-col gap-3 w-full max-w-[100%]">
+                      {/* Teks percakapan AI (selalu muncul jika ada teksnya) */}
+                      {(parsedContent?.rawText || parsedContent?.type === "text") && (
+                        <div className="max-w-[85%] rounded-2xl px-4 py-2 text-base bg-zinc-800 text-zinc-200 rounded-tl-sm self-start whitespace-pre-wrap">
+                          {parsedContent.rawText || parsedContent.text || msg.content}
+                        </div>
+                      )}
+
+                      {/* Kartu Produk (Single) */}
+                      {parsedContent?.type === "product" && (
+                        <div className="w-[260px] bg-zinc-900 rounded-2xl overflow-hidden shadow-2xl border border-zinc-700/50 hover:border-primary/50 transition-colors animate-in fade-in zoom-in duration-300">
+                          <div className="w-full h-48 bg-zinc-800 relative group overflow-hidden">
+                            <img 
+                              src={parsedContent.gambar || "/placeholder.jpg"} 
+                              alt={parsedContent.nama} 
+                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=500&q=80";
+                              }}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent opacity-90" />
+                            <span className="absolute bottom-2 left-2 bg-primary/90 text-primary-foreground text-[10px] font-bold px-2 py-0.5 rounded backdrop-blur-sm shadow-sm">
+                              PRODUK PILIHAN
+                            </span>
+                          </div>
+                          <div className="p-4 flex flex-col">
+                            <h4 className="font-bold text-zinc-100 text-base leading-snug line-clamp-2 min-h-[40px]">{parsedContent.nama}</h4>
+                            <p className="text-primary font-black text-lg mt-1">Rp {parsedContent.harga}</p>
+                            <button className="w-full mt-3 bg-white text-black hover:bg-zinc-200 py-2.5 rounded-xl text-sm font-bold transition-transform active:scale-95 flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                              <ShoppingCart className="w-4 h-4" />
+                              Beli Sekarang
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Carousel Produk (Multiple) */}
+                      {parsedContent?.type === "product_list" && Array.isArray(parsedContent.items) && (
+                        <div className="w-full overflow-x-auto flex gap-3 pb-4 snap-x snap-mandatory animate-in fade-in zoom-in duration-300 -mx-4 px-4 [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-thumb]:bg-zinc-700 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent">
+                          {parsedContent.items.map((item: any, i: number) => {
+                            const formattedPrice = !isNaN(parseInt(item.harga)) 
+                              ? parseInt(item.harga).toLocaleString('id-ID') 
+                              : item.harga;
+                            
+                            return (
+                              <div key={i} className="min-w-[220px] max-w-[220px] shrink-0 snap-center bg-zinc-900 rounded-2xl overflow-hidden shadow-2xl border border-zinc-700/50 hover:border-primary/50 transition-colors flex flex-col">
+                                <div className="w-full h-36 bg-zinc-800/50 relative group overflow-hidden flex items-center justify-center p-2">
+                                  <img 
+                                    src={item.gambar || "/placeholder.jpg"} 
+                                    alt={item.nama} 
+                                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110 drop-shadow-lg"
+                                    onError={(e) => {
+                                      (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=500&q=80";
+                                    }}
+                                  />
+                                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent opacity-90" />
+                                </div>
+                                <div className="p-3 flex flex-col flex-1">
+                                  <h4 className="font-bold text-zinc-100 text-sm leading-snug line-clamp-2 min-h-[36px]">{item.nama}</h4>
+                                  <p className="text-primary font-black text-base mt-1">Rp {formattedPrice}</p>
+                                  <a href={item.kategori ? `/collection/${item.kategori}` : "/collection"} className="w-full mt-auto pt-2 bg-white text-black hover:bg-zinc-200 py-2 rounded-xl text-xs font-bold transition-transform active:scale-95 flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                                    <ShoppingCart className="w-3 h-3" />
+                                    Lihat Produk
+                                  </a>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Input Area */}

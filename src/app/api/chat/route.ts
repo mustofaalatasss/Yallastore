@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { db } from "@/db";
+import { products } from "@/db/schema";
 
 export async function POST(request: Request) {
   try {
@@ -9,6 +11,40 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Message is required" }, { status: 400 });
     }
 
+    // 1. Ambil data produk dari database (RAG Context Injection)
+    let productCatalogText = "";
+    try {
+      const { eq } = await import("drizzle-orm");
+      const { categories } = await import("@/db/schema");
+      
+      const allProducts = await db.select({ 
+        name: products.name, 
+        price: products.price, 
+        image: products.image,
+        categorySlug: categories.slug
+      })
+      .from(products)
+      .leftJoin(categories, eq(products.categoryId, categories.id));
+      
+      productCatalogText = allProducts.map(p => `- ${p.name} (Harga: Rp ${p.price}, Gambar: ${p.image}, Kategori: ${p.categorySlug || ''})`).join('\n');
+    } catch (e) {
+      console.error("Gagal mengambil data produk dari DB:", e);
+      // Lanjut tanpa konteks jika gagal
+    }
+
+    // 2. Suntikkan (Inject) Katalog ke dalam pesan secara rahasia
+    const enrichedMessage = `
+---
+[INFO SISTEM RAHASIA - JANGAN DIBACAKAN KE PELANGGAN]
+Berikut adalah daftar seluruh produk di Yalla Store saat ini beserta link gambarnya:
+${productCatalogText || "(Gagal memuat katalog)"}
+Gunakan link gambar di atas yang paling relevan saat membuat JSON Kartu Produk.
+---
+
+[PESAN DARI PELANGGAN]:
+${message}
+`;
+
     // URL Webhook n8n rahasia Mas
     const n8nWebhookUrl = "https://mustofaalatas.app.n8n.cloud/webhook/d6fd1f31-7dc1-47e9-bf17-120c1ce551ab";
 
@@ -18,7 +54,7 @@ export async function POST(request: Request) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message, sessionId }),
+      body: JSON.stringify({ message: enrichedMessage, sessionId }),
     });
 
     if (!n8nResponse.ok) {

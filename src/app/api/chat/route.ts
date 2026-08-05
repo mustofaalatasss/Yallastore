@@ -46,7 +46,7 @@ ${message}
 `;
 
     // URL Webhook n8n rahasia Mas
-    const n8nWebhookUrl = "https://n8n.portofolio-mustofa.my.id/webhook/Chat-Api";
+    const n8nWebhookUrl = "https://n8n.portofolio-mustofa.my.id/webhook/d6fd1f31-7dc1-47e9-bf17-120c1ce551ab";
 
     // Jembatan: Next.js mengirimkan pesan ke n8n di belakang layar
     const n8nResponse = await fetch(n8nWebhookUrl, {

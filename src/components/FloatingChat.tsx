@@ -74,7 +74,16 @@ export function FloatingChat() {
       const data = await response.json();
       
       // Jika n8n membalas dengan struktur JSON { reply: "..." } atau teks biasa
-      const aiReply = data.output || data.reply || data.message || data.text || (typeof data === "string" ? data : "Pesan diterima, namun format balasan tidak dikenali.");
+      let aiReply = "Pesan diterima, namun format balasan tidak dikenali.";
+      if (typeof data === "string") {
+        aiReply = data;
+      } else if (data.choices && data.choices[0] && data.choices[0].message) {
+        aiReply = data.choices[0].message.content; // Format HTTP Request OpenAI/Groq asli
+      } else if (data.message && data.message.content) {
+        aiReply = data.message.content; // Format Node standar OpenAI di n8n
+      } else {
+        aiReply = data.output || data.reply || (typeof data.message === "string" ? data.message : null) || data.text || aiReply;
+      }
 
       setMessages((prev) => [
         ...prev,

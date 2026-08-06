@@ -39,6 +39,7 @@ export async function POST(request: Request) {
 Berikut adalah daftar seluruh produk di Yalla Store saat ini beserta link gambarnya:
 ${productCatalogText || "(Gagal memuat katalog)"}
 Gunakan link gambar di atas yang paling relevan saat membuat JSON Kartu Produk.
+PENTING: Kamu WAJIB menjawab menggunakan BAHASA YANG SAMA dengan bahasa yang digunakan oleh pelanggan pada pesannya (Jika pelanggan bertanya dalam bahasa Inggris, balas pakai bahasa Inggris. Jika bahasa Indonesia, balas pakai bahasa Indonesia).
 ---
 
 [PESAN DARI PELANGGAN]:

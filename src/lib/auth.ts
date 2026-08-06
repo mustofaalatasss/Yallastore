@@ -3,8 +3,12 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/db";
 
 export const auth = betterAuth({
-  baseURL: "https://yallastore.my.id",
-  trustedOrigins: ["https://yallastore.my.id"],
+  baseURL: process.env.BETTER_AUTH_URL || "https://yallastore.my.id",
+  trustedOrigins: [
+    "https://yallastore.my.id", 
+    "https://www.yallastore.my.id", 
+    "https://yallastore.vercel.app"
+  ],
   database: drizzleAdapter(db, {
     provider: "pg",
   }),

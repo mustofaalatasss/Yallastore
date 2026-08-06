@@ -35,14 +35,14 @@ export async function POST(request: Request) {
     // 2. Suntikkan (Inject) Katalog ke dalam pesan secara rahasia
     const enrichedMessage = `
 ---
-[INFO SISTEM RAHASIA - JANGAN DIBACAKAN KE PELANGGAN]
-Berikut adalah daftar seluruh produk di Yalla Store saat ini beserta link gambarnya:
-${productCatalogText || "(Gagal memuat katalog)"}
-Gunakan link gambar di atas yang paling relevan saat membuat JSON Kartu Produk.
-PENTING: Kamu WAJIB menjawab menggunakan BAHASA YANG SAMA dengan bahasa yang digunakan oleh pelanggan pada pesannya (Jika pelanggan bertanya dalam bahasa Inggris, balas pakai bahasa Inggris. Jika bahasa Indonesia, balas pakai bahasa Indonesia).
+[SECRET SYSTEM INFO - DO NOT READ TO CUSTOMER]
+Here is the list of all Yalla Store products and their image links:
+${productCatalogText || "(Failed to load catalog)"}
+Use the most relevant image link above when creating a Product Card JSON.
+CRITICAL INSTRUCTION: You MUST reply in the EXACT SAME LANGUAGE as the user's message below! If the user writes in English, you MUST reply entirely in English. Jika user menulis bahasa Indonesia, balas pakai bahasa Indonesia.
 ---
 
-[PESAN DARI PELANGGAN]:
+[USER MESSAGE]:
 ${message}
 `;
 

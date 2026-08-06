@@ -106,7 +106,7 @@ export function FloatingChat() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50">
       {/* Tombol Floating */}
       {!isOpen && (
         <button
@@ -123,7 +123,7 @@ export function FloatingChat() {
 
       {/* Jendela Chat */}
       {isOpen && (
-        <div className="w-96 h-[32rem] bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-bottom-5">
+        <div className="w-[calc(100vw-2rem)] sm:w-96 h-[70vh] sm:h-[32rem] max-h-[800px] bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-bottom-5">
           {/* Header */}
           <div className="bg-zinc-800 p-4 flex justify-between items-center border-b border-zinc-700">
             <div className="flex items-center gap-2">
@@ -166,7 +166,7 @@ export function FloatingChat() {
 
                       {/* Kartu Produk (Single) */}
                       {parsedContent?.type === "product" && (
-                        <div className="w-[260px] bg-zinc-900 rounded-2xl overflow-hidden shadow-2xl border border-zinc-700/50 hover:border-primary/50 transition-colors animate-in fade-in zoom-in duration-300">
+                        <div className="w-full sm:w-[260px] max-w-[260px] bg-zinc-900 rounded-2xl overflow-hidden shadow-2xl border border-zinc-700/50 hover:border-primary/50 transition-colors animate-in fade-in zoom-in duration-300">
                           <div className="w-full h-48 bg-zinc-800 relative group overflow-hidden">
                             <img 
                               src={parsedContent.gambar || "/placeholder.jpg"} 

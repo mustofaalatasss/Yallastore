@@ -96,35 +96,37 @@ export async function POST(req: Request) {
       });
     }
 
-    // 5.5. Kirim notifikasi order ke n8n (fire-and-forget, gak boleh block checkout kalau n8n down)
+    // 5.5. Kirim notifikasi order ke n8n (await dengan timeout, supaya request sempat terkirim sebelum serverless function mati)
     if (process.env.N8N_ORDER_WEBHOOK_URL) {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 3000); // max nunggu 3 detik
+      try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 5000);
 
-      fetch(process.env.N8N_ORDER_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          orderId: newOrder.orderNumber,
-          customerName,
-          email: customerEmail || null,
-          phone: customerPhone,
-          address: shippingAddress,
-          items: finalItems.map(item => ({
-            name: item.productName,
-            size: item.size || "-",
-            qty: item.quantity,
-            price: item.price,
-          })),
-          total: totalAmount,
-          status: "PENDING",
-        }),
-        signal: controller.signal,
-      })
-        .catch((err) => {
-          console.error("Gagal kirim notifikasi n8n (order tetap tersimpan):", err);
-        })
-        .finally(() => clearTimeout(timeout));
+        await fetch(process.env.N8N_ORDER_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            orderId: newOrder.orderNumber,
+            customerName,
+            email: customerEmail || null,
+            phone: customerPhone,
+            address: shippingAddress,
+            items: finalItems.map(item => ({
+              name: item.productName,
+              size: item.size || "-",
+              qty: item.quantity,
+              price: item.price,
+            })),
+            total: totalAmount,
+            status: "PENDING",
+          }),
+          signal: controller.signal,
+        });
+
+        clearTimeout(timeout);
+      } catch (err) {
+        console.error("Gagal kirim notifikasi n8n (order tetap tersimpan):", err);
+      }
     }
 
     // 6. Return response immediately for manual transfer

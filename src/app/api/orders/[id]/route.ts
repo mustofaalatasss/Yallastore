@@ -58,24 +58,26 @@ export async function PATCH(
 
     // Kirim notifikasi ke n8n kalau order baru aja ditandai Completed
     if (updated && status === "Completed" && process.env.N8N_ORDER_COMPLETED_WEBHOOK_URL) {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 3000);
+      try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 5000);
 
-      fetch(process.env.N8N_ORDER_COMPLETED_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          orderId: updated.orderNumber,
-          customerName: updated.customerName,
-          totalAmount: updated.totalAmount,
-          status: updated.status,
-        }),
-        signal: controller.signal,
-      })
-        .catch((err) => {
-          console.error("Gagal kirim notifikasi order completed ke n8n:", err);
-        })
-        .finally(() => clearTimeout(timeout));
+        await fetch(process.env.N8N_ORDER_COMPLETED_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            orderId: updated.orderNumber,
+            customerName: updated.customerName,
+            totalAmount: updated.totalAmount,
+            status: updated.status,
+          }),
+          signal: controller.signal,
+        });
+
+        clearTimeout(timeout);
+      } catch (err) {
+        console.error("Gagal kirim notifikasi order completed ke n8n:", err);
+      }
     }
 
     if (!updated) {

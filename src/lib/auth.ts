@@ -7,7 +7,8 @@ export const auth = betterAuth({
   trustedOrigins: [
     "https://yallastore.my.id", 
     "https://www.yallastore.my.id", 
-    "https://yallastore.vercel.app"
+    "https://yallastore.vercel.app",
+    "http://localhost:3000"
   ],
   database: drizzleAdapter(db, {
     provider: "pg",

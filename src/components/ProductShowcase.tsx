@@ -116,10 +116,10 @@ export default function ProductShowcase({ products = [] }: { products?: any[] })
               </div>
 
               <div className="flex flex-col flex-grow">
-                  <span className="text-primary text-xs font-sans tracking-widest uppercase mb-2 block">{product.category?.name || "Uncategorized"}</span>
+                  <span className="text-gold text-xs font-sans tracking-widest uppercase mb-2 block">{product.category?.name || "Uncategorized"}</span>
                   <h3 className="dark:text-white text-gray-900 font-serif text-xl mb-2 group-hover:text-primary transition-colors">{product.name}</h3>
                   <div className="flex justify-between items-center mt-auto pt-4 border-t dark:border-white/5 border-black/5">
-                    <span className="text-primary font-sans font-medium tracking-wide">Rp {product.price.toLocaleString('id-ID')}</span>
+                    <span className="text-gold font-sans font-medium tracking-wide">Rp {product.price.toLocaleString('id-ID')}</span>
                     <div className="flex items-center gap-1 text-primary">
                       <Star className="w-4 h-4 fill-current" />
                       <span className="text-sm font-sans">{product.rating || 5.0}</span>

@@ -85,6 +85,9 @@ export function FloatingChat() {
         aiReply = data.output || data.reply || (typeof data.message === "string" ? data.message : null) || data.text || aiReply;
       }
 
+      // Hapus teks <think>...</think> yang sering dimunculkan model DeepSeek/Qwen
+      aiReply = aiReply.replace(/<think>[\s\S]*?<\/think>/g, "").trim();
+
       setMessages((prev) => [
         ...prev,
         {

@@ -116,7 +116,7 @@ export default function ProductShowcase({ products = [] }: { products?: any[] })
               </div>
 
               <div className="flex flex-col flex-grow">
-                  <span className="dark:text-silver text-gray-600 text-xs font-sans tracking-widest uppercase mb-2 block">{product.category?.name || "Uncategorized"}</span>
+                  <span className="text-primary text-xs font-sans tracking-widest uppercase mb-2 block">{product.category?.name || "Uncategorized"}</span>
                   <h3 className="dark:text-white text-gray-900 font-serif text-xl mb-2 group-hover:text-primary transition-colors">{product.name}</h3>
                   <div className="flex justify-between items-center mt-auto pt-4 border-t dark:border-white/5 border-black/5">
                     <span className="dark:text-white text-gray-900 font-mono">Rp {product.price.toLocaleString('id-ID')}</span>
